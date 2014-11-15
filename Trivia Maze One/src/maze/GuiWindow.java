@@ -11,6 +11,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 
 
+
 public class GuiWindow {
 
 	private JFrame frame;
@@ -21,6 +22,7 @@ public class GuiWindow {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				one = new Maze();
 				try {
 					GuiWindow window = new GuiWindow();
 					window.frame.setVisible(true);
