@@ -1,4 +1,4 @@
-package trivaMaze;
+package maze;
 
 public class Wall implements I_Path
 {

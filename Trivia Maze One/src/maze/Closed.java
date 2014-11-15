@@ -1,4 +1,4 @@
-package trivaMaze;
+package maze;
 
 import java.util.Scanner;
 

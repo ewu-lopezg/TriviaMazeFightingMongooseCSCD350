@@ -1,4 +1,4 @@
-package trivaMaze;
+package maze;
 
 public class Open implements I_Status 
 {

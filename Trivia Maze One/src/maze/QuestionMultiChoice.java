@@ -1,4 +1,4 @@
-package trivaMaze;
+package maze;
 
 public class QuestionMultiChoice implements I_Question
 {

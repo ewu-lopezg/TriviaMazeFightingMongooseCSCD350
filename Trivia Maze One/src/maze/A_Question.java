@@ -1,4 +1,4 @@
-package trivaMaze;
+package maze;
 
 
 public abstract class A_Question 

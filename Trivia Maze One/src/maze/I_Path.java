@@ -1,4 +1,4 @@
-package trivaMaze;
+package maze;
 
 public interface I_Path 
 {
