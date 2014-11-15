@@ -1,10 +1,12 @@
-package maze;
+package trivaMaze;
 
 import java.util.Scanner;
 
-public class Closed  implements I_Status 
+import javax.swing.JOptionPane;
+
+public class Closed implements I_Status 
 {
-//	A_Question question;
+	private I_Question question;
 
 	@Override
 	public boolean move() 
@@ -16,19 +18,31 @@ public class Closed  implements I_Status
 	{
 		return true;
 	}
-	
+
 	private boolean ask()
 	{
-	//	return question.ask();
-		System.out.print("1+ 1= ");
-//		question = new QuestionTrueFalse(true, "taters gonna tate");
+		question = new QuestionTrueFalse("true", "taters gonna tate");
+//		question = new QuestionMultiChoice("ma ha ha ha","best way to fight a titan","go for the eyes","ma ha ha ha","die" );
 		
-		Scanner kb = new Scanner(System.in);
-		int temp = Integer.parseInt(kb.nextLine());
+		Object[] possibleValues = question.getPossible();
+		String selectedValue = (String) JOptionPane.showInputDialog(null,question.getQuestion(), question.getType(),
+		JOptionPane.QUESTION_MESSAGE, null,
+		possibleValues, possibleValues[0]);
 		
-		if(temp == 2)
-			return true;
-			
-		return false;
+		return question.validate(selectedValue);
 	}
+
+	@Override
+	public boolean hasQuestion()
+	{
+		return true;
+	}
+
+	@Override
+	public String[] getQuestion() 
+	{
+		
+		return null;
+	}
+
 }

@@ -1,4 +1,4 @@
-package maze;
+package trivaMaze;
 
 public class Player 
 {

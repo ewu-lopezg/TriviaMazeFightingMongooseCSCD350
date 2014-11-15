@@ -1,4 +1,4 @@
-package maze;
+package trivaMaze;
 
 public class Locked implements I_Status 
 {
@@ -14,4 +14,17 @@ public class Locked implements I_Status
 	{
 		return false;
 	}
+
+	@Override
+	public boolean hasQuestion() 
+	{
+		return false;
+	}
+
+	@Override
+	public String[] getQuestion() 
+	{
+		return null;
+	}
+
 }

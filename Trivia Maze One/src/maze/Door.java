@@ -1,8 +1,8 @@
-package maze;
+package trivaMaze;
 
 public class Door implements I_Path
 {
-	I_Status status;
+	private I_Status status;
 //	Room one;
 //	Room two;
 	
@@ -23,9 +23,9 @@ public class Door implements I_Path
 	}
 
 	@Override
-	public boolean isPassable() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isPassable() 
+	{
+		return this.status.isPassable();
 	}
 
 	@Override

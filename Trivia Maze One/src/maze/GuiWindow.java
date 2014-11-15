@@ -1,21 +1,29 @@
-package maze;
+package trivaMaze;
 
 import java.awt.EventQueue;
-import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JLayeredPane;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Canvas;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.io.PrintStream;
+
 import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.JMenuBar;
 
-
-
-public class GuiWindow {
+public class guiWindow {
 
 	private JFrame frame;
 	private static Maze one;
+
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +32,7 @@ public class GuiWindow {
 			public void run() {
 				one = new Maze();
 				try {
-					GuiWindow window = new GuiWindow();
+					guiwindow window = new guiwindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +44,7 @@ public class GuiWindow {
 	/**
 	 * Create the application.
 	 */
-	public GuiWindow() {
+	public guiwindow() {
 		initialize();
 	}
 
@@ -73,7 +81,7 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				one.moveUp();//-----------------------------------------------------move up
-				words.setText(one.one.getLocation().getX() + ", " + one.one.getLocation().getY());
+				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
 				map.setText(one.mazeString());
 			}
 		});
@@ -85,7 +93,7 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent e) 
 			{
 				one.moveDown();//-----------------------------------------------------move down
-				words.setText(one.one.getLocation().getX() + ", " + one.one.getLocation().getY());
+				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
 				map.setText(one.mazeString());
 			}
 		});
@@ -97,7 +105,7 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent e) 
 			{
 				one.moveLeft();//----------------------------------------------------left
-				words.setText(one.one.getLocation().getX() + ", " + one.one.getLocation().getY());
+				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
 				map.setText(one.mazeString());
 			}
 		});
@@ -109,12 +117,17 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent e)
 			{
 				one.moveRight();//-------------------------------------------------right
-				words.setText(one.one.getLocation().getX() + ", " + one.one.getLocation().getY());
+				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
 				map.setText(one.mazeString());
 			}
 		});
 		layeredPane.add(btnRight);
-	
+		
+		
+		
+
+		
+		
+
 	}
 }
-

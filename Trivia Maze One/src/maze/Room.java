@@ -1,10 +1,11 @@
-package maze;
+package trivaMaze;
 
-public class Room {
-	I_Path up;
-	I_Path down;
-	I_Path left;
-	I_Path right;
+public class Room 
+{
+	private I_Path up;
+	private I_Path down;
+	private I_Path left;
+	private I_Path right;
 	
 	public Room()
 	{
@@ -28,5 +29,25 @@ public class Room {
 	public void setRight(I_Path passed)
 	{
 		this.right = passed;
+	}
+	
+	public I_Path getUp()
+	{
+		return this.up;
+	}
+	
+	public I_Path getLeft()
+	{
+		return this.left;
+	}
+	
+	public I_Path getRight()
+	{
+		return this.right;
+	}
+	
+	public I_Path getDown()
+	{
+		return this.down;
 	}
 }

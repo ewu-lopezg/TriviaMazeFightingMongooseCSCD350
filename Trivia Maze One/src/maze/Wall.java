@@ -1,21 +1,22 @@
-package maze;
+package trivaMaze;
 
 public class Wall implements I_Path
 {
-		public Wall()
-		{
-			
-		}
-		@Override
-		public boolean isPassable() 
-		{
-			return false;
-		}
+	public Wall()
+	{
+		
+	}
+	@Override
+	public boolean isPassable() 
+	{
+		return false;
+	}
 
-		@Override
-		public boolean move() 
-		{
-			return false;
-			
-		}
+	@Override
+	public boolean move() 
+	{
+		return false;
+		
+	}
+
 }
