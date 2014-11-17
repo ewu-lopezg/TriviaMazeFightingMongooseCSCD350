@@ -7,7 +7,7 @@ public class Database
 	private static Connection c = null;
 	private static Statement stmt = null;
 	
-	public static void main (String args[])
+	/*public static void main (String args[])
 	{
 		//if not exist 
 		//when creating, deleting, inserting 
@@ -23,7 +23,7 @@ public class Database
 			//dropTable("user");
 			//selectOperation();
 			//close();
-	}
+	}*/
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Takes command for both tables(USER and QUESTIONS). For the USER table: tablename,USERNAME,PASSWORD,ADMIN,SAVE,LOCATION 
