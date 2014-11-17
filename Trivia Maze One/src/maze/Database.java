@@ -1,18 +1,27 @@
 package maze;
 
+<<<<<<< HEAD
 import java.sql.*; 
+=======
+import java.sql.*;
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 
 public class Database {
 	private static Connection c = null;
 	private static Statement stmt = null;
 	
+<<<<<<< HEAD
 	/*public static void main (String args[])
+=======
+	public static void main (String args[])
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	{
 		//if not exist 
 		//when creating, deleting, inserting 
 		//Insertion: check if username already exists 
 		//if database dropped than SELECT cannot print
 		
+<<<<<<< HEAD
 			//openTable();
 			//createTable();
 			//insertOperation();
@@ -46,6 +55,28 @@ public class Database {
 	 * @returns boolean true if opens database successfully, false if otherwise 
 	 */
 	private static boolean openTable()
+=======
+			openTable();
+			createTable();
+			insertOperation();
+			//updateOperation();
+			//deleteOperation();			
+			selectOperation();
+			//dropTable("user");
+			//selectOperation();
+			close();
+	}
+//--------------------------------------------------------------------------------------------------------------------------
+	private Database(String username, String password, boolean admin)
+	{
+		insertOperation();
+	}
+//--------------------------------------------------------------------------------------------------------------------------
+	/*
+	 * Opens table
+	 */
+	private static void openTable()
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	{
 		try{
 			Class.forName("org.sqlite.JDBC");
@@ -53,14 +84,22 @@ public class Database {
 			c.setAutoCommit(false);
 		}catch (Exception e)
 		 {
+<<<<<<< HEAD
 			return false; 
 		}
 		System.out.println("Opened database Successfully");
 		return true; 
+=======
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		System.out.println("Opened database Successfully");
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	}
 	
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
+<<<<<<< HEAD
 	 * Inserts into the Questions table. Returns true if successful, false otherwise. 
 	 * @param String[] array takes [QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE] in that order. 
 	 * @returns boolean true if successful and false otherwise.
@@ -94,12 +133,35 @@ public class Database {
 			stmt = c.createStatement();
 			String sql = "INSERT INTO USER (ID,USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
 	                   "VALUES (" + command[1] +"," + command[2] + ", " + command[3] + ", "+ command[4] +", NULL, NULL);";
+=======
+	 * Used whenever the user creates profile
+	 */
+	private static void insertOperationParams(String username, String password, boolean admin)
+	{
+		//Converts boolean admin into 1 or 0 for database insertion purposes 
+		int finaladmin;
+		if(admin)
+		{
+			finaladmin = 1; 
+		}
+		else
+		{
+			finaladmin = 0;
+		}
+		
+		
+		try{
+			stmt = c.createStatement();
+			String sql = "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
+	                   "VALUES (" + username +"," + password + ", " + finaladmin + ", NULL, NULL);";
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 				stmt.executeUpdate(sql);
 				
 			stmt.close();
 			c.commit();
 		}catch(Exception e)
 		 {
+<<<<<<< HEAD
 			return false; 
 		}
 		System.out.println("Records created successfully");
@@ -111,12 +173,25 @@ public class Database {
 	 * @returns boolean true if created successfully, false otherwise 
 	 */
 	private static boolean createTable()
+=======
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		System.out.println("Records created successfully");
+	}	
+//--------------------------------------------------------------------------------------------------------------------------
+	private static void createTable()
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	{
 		try{
 			stmt = c.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS USER" +
+<<<<<<< HEAD
 	                   "(ID INT NOT NULL,"+
 	                   "USERNAME CHAR(10) NOT NULL, " + 
+=======
+	                   "(USERNAME CHAR(10) NOT NULL, " + 
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	                   " PASSWORD INT NOT NULL, " + 
 	                   " ADMIN BOOLEAN NOT NULL, " +
 	                   " SAVE CHAR(255) , " +
@@ -125,8 +200,12 @@ public class Database {
 			
 			
 			sql = "CREATE TABLE IF NOT EXISTS QUESTIONS" +
+<<<<<<< HEAD
 	                   "(ID INT NOT NULL,"+
 	                   " QUESTION CHAR(255) NOT NULL, " + 
+=======
+	                   "(QUESTION CHAR(255) NOT NULL, " + 
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	                   " ANSWER CHAR(255) NOT NULL, " + 
 	                   " POSSIBLE1 CHAR(255) NOT NULL, " + 
 	                   " POSSIBLE2 CHAR(255) NOT NULL, " +
@@ -137,6 +216,7 @@ public class Database {
 			stmt.close();
 		}catch(Exception e)
 		 {
+<<<<<<< HEAD
 			return false; 
 		}
 		System.out.println("Table created successfully");
@@ -146,6 +226,14 @@ public class Database {
 	/*
 	 * Selects everything from the USER table
 	 */
+=======
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		System.out.println("Table created successfully");
+	}
+//--------------------------------------------------------------------------------------------------------------------------
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	private static void selectOperation()
 	{
 		try{
@@ -153,7 +241,10 @@ public class Database {
 			ResultSet result = stmt.executeQuery("SELECT * FROM USER;");
 			while(result.next())
 			{
+<<<<<<< HEAD
 				int id = result.getInt("id");
+=======
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 				String username = result.getString("username");
 				int password  = result.getInt("password");
 				boolean admin = result.getBoolean("admin");
@@ -161,7 +252,10 @@ public class Database {
 				String location = result.getString("location");
 				
 				System.out.println();
+<<<<<<< HEAD
 				System.out.println("ID = " + id);
+=======
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 				System.out.println("USERNAME = " + username);
 				System.out.println("PASSWORD = " + password);
 				System.out.println("ADMIN " + admin);
@@ -179,7 +273,11 @@ public class Database {
 		}	
 	}
 //--------------------------------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 	/*private static void insertOperation()
+=======
+	private static void insertOperation()
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	{
 		try{
 			stmt = c.createStatement();
@@ -199,6 +297,7 @@ public class Database {
 			System.exit(0);
 		}
 		System.out.println("Records created successfully");
+<<<<<<< HEAD
 	}	*/
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
@@ -212,11 +311,22 @@ public class Database {
 		{
 			stmt = c.createStatement();
 			String sql = "UPDATE " + command[0] +" set "+ command[1] +"  = "+ command[2] +" where "+ command[3] +"= "+ command[4] +";";
+=======
+	}	
+//--------------------------------------------------------------------------------------------------------------------------
+	private static void updateOperation()
+	{
+		try
+		{
+			stmt = c.createStatement();
+			String sql = "UPDATE USER set password = 2014 where ID=1;";
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 			stmt.executeUpdate(sql);
 			c.commit();
 	        stmt.close();
 		}catch ( Exception e )
 		 {
+<<<<<<< HEAD
 		      return false; 
 		 }
 		 System.out.println("Updating done successfully");
@@ -229,17 +339,32 @@ public class Database {
 	 *@returns boolean true if deletion successful, false if otherwise 
 	 */
 	private static boolean deleteOperation(String tableName, String id)
+=======
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		 }
+		 System.out.println("Updating done successfully");
+	}
+//--------------------------------------------------------------------------------------------------------------------------
+	
+	private static void deleteOperation()
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	{
 		try
 		{
 			stmt = c.createStatement();
+<<<<<<< HEAD
 		    String sql = "DELETE from " + tableName +" where ID="+ id +";";
 		    
+=======
+		    String sql = "DELETE from USER where ID=2;";
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 		    stmt.executeUpdate(sql);
 		    c.commit();
 		    stmt.close();
 		}catch ( Exception e )
 		 {
+<<<<<<< HEAD
 		      return false; 
 		 }
 		 System.out.println("Deletion done successfully");
@@ -252,17 +377,31 @@ public class Database {
 	 * @returns boolean true database dropped successful, false if otherwise
 	 */
 	private static boolean dropTable(String tableName)
+=======
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		 }
+		 System.out.println("Deletion done successfully");
+	}
+//--------------------------------------------------------------------------------------------------------------------------
+	private static void dropTable(String tableName)
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	{
 		try
 		{
 			stmt = c.createStatement();
+<<<<<<< HEAD
 			//String sql = "DROP TABLE IF EXISTS " + tableName + " ;";
 			String sql = "DROP TABLE " + tableName + " ;"; //added this methods so that if not exist it throws an error
+=======
+			String sql = "DROP TABLE IF EXISTS " + tableName + " ;";
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 			stmt.executeUpdate(sql);
 			c.commit();			
 			stmt.close();
 		}catch ( Exception e )
 		 {
+<<<<<<< HEAD
 		      return false; 
 		 }
 		 System.out.println("Dropped table successfully");
@@ -272,6 +411,14 @@ public class Database {
 	/*
 	 * Closes maze database
 	 */
+=======
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		 }
+		 System.out.println("Dropped table successfully");
+	}
+//--------------------------------------------------------------------------------------------------------------------------
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
 	private static void close()
 	{
 		try{
@@ -284,3 +431,9 @@ public class Database {
 		 System.out.println("Closed successfully");
 	}
 }
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 2396e21621eee602d8f1dc2060a32965ed810b37
