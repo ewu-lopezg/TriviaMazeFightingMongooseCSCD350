@@ -11,7 +11,8 @@ public class Closed implements I_Status
 	@Override
 	public boolean move() 
 	{
-		return ask();
+		boolean question = ask();
+		return question;
 	}
 
 	public boolean isPassable()
@@ -28,6 +29,10 @@ public class Closed implements I_Status
 		String selectedValue = (String) JOptionPane.showInputDialog(null,question.getQuestion(), question.getType(),
 		JOptionPane.QUESTION_MESSAGE, null,
 		possibleValues, possibleValues[0]);
+		
+		//hit exit
+		if(selectedValue == null)
+			return false;
 		
 		return question.validate(selectedValue);
 	}
