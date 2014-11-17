@@ -19,7 +19,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 
-public class guiWindow {
+public class GuiWindow {
 
 	private JFrame frame;
 	private static Maze one;
@@ -32,7 +32,7 @@ public class guiWindow {
 			public void run() {
 				one = new Maze();
 				try {
-					guiwindow window = new guiwindow();
+					GuiWindow window = new GuiWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class guiWindow {
 	/**
 	 * Create the application.
 	 */
-	public guiwindow() {
+	public GuiWindow() {
 		initialize();
 	}
 
