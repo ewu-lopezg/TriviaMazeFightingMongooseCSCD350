@@ -142,6 +142,11 @@ public class GuiWindow {
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {//---------Exit Button
+				System.exit(0);//-----------------------------Exits out of the home GUI form 
+			}
+		});
 		mnFile.add(mntmExit);
 		
 		JMenu mnEdit = new JMenu("Edit");
