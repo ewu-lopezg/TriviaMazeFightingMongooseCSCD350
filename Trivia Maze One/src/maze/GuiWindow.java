@@ -18,6 +18,8 @@ import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class GuiWindow {
 
@@ -123,11 +125,36 @@ public class GuiWindow {
 		});
 		layeredPane.add(btnRight);
 		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 626, 25);
+		layeredPane.add(menuBar);
 		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
 		
-
+		JMenuItem mntmOpen = new JMenuItem("Open");
+		mnFile.add(mntmOpen);
 		
+		JMenuItem mntmNew = new JMenuItem("New");
+		mnFile.add(mntmNew);
 		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mnFile.add(mntmSave);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnFile.add(mntmExit);
+		
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+		
+		JMenuItem mntmDatabase = new JMenuItem("Database");
+		mnEdit.add(mntmDatabase);
+		
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mnHelp.add(mntmAbout);
 
 	}
 }
