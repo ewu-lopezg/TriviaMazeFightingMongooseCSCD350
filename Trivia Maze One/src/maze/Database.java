@@ -37,15 +37,20 @@ public class Database
 	 * For the QUESTIONS table: tablename,QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE.
 	 * @param String[] takes ([0]=tableName, [1]=colum1, [2]=colum2, [3]=colum3, [4]=colum4, [5]=colum5, [6]=colum6)
 	 */
-	public Database(String[] command)
+	public Database()
+	{
+		openTable();
+		createTable();
+	}
+	public boolean Database(String[] command)
 	{
 		if(command[0] == "questions")
 		{
-			insertToQuestionSTable(command);
+			return insertToQuestionSTable(command);
 		}
 		else
 		{
-			insertToUserTable(command);
+			return insertToUserTable(command);
 		}
 	}
 //--------------------------------------------------------------------------------------------------------------------------
@@ -53,7 +58,7 @@ public class Database
 	 * Opens maze database 
 	 * @returns boolean true if opens database successfully, false if otherwise 
 	 */
-	private static boolean openTable()
+	public static boolean openTable()
 	{
 		try{
 			Class.forName("org.sqlite.JDBC");
@@ -63,7 +68,6 @@ public class Database
 		 {
 			return false; 
 		}
-		System.out.println("Opened database Successfully");
 		return true; 
 	}
 	
@@ -73,7 +77,7 @@ public class Database
 	 * @param String[] array takes [QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE] in that order. 
 	 * @returns boolean true if successful and false otherwise.
 	 */
-	private static boolean insertToQuestionSTable(String[] command)
+	public static boolean insertToQuestionSTable(String[] command)
 	{		
 		try{
 			stmt = c.createStatement();
@@ -87,7 +91,6 @@ public class Database
 		 {
 			return false; 
 		}
-		System.out.println("Records created successfully");
 		return true; 
 	}
 //--------------------------------------------------------------------------------------------------------------------------
@@ -96,7 +99,7 @@ public class Database
 	 * @param String[] array takes [tablename, ID,USERNAME,PASSWORD,ADMIN,SAVE,LOCATION] in that order
 	 * @returns boolean true if insert successful, false if otherwise. 
 	 */
-	private static boolean insertToUserTable(String[] command)
+	public static boolean insertToUserTable(String[] command)
 	{		
 		try{
 			stmt = c.createStatement();
@@ -110,7 +113,6 @@ public class Database
 		 {
 			return false; 
 		}
-		System.out.println("Records created successfully");
 		return true; 
 	}	
 //--------------------------------------------------------------------------------------------------------------------------
@@ -118,12 +120,12 @@ public class Database
 	 * Creates tables for USER and QUESTIONS in the maze database
 	 * @returns boolean true if created successfully, false otherwise 
 	 */
-	private static boolean createTable()
+	public static boolean createTable()
 	{
 		try{
 			stmt = c.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS USER" +
-	                   "(ID INT NOT NULL,"+
+	                   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 	                   "USERNAME CHAR(10) NOT NULL, " + 
 	                   " PASSWORD INT NOT NULL, " + 
 	                   " ADMIN BOOLEAN NOT NULL, " +
@@ -133,7 +135,7 @@ public class Database
 			
 			
 			sql = "CREATE TABLE IF NOT EXISTS QUESTIONS" +
-	                   "(ID INT NOT NULL,"+
+	                   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 	                   " QUESTION CHAR(255) NOT NULL, " + 
 	                   " ANSWER CHAR(255) NOT NULL, " + 
 	                   " POSSIBLE1 CHAR(255) NOT NULL, " + 
@@ -147,14 +149,13 @@ public class Database
 		 {
 			return false; 
 		}
-		System.out.println("Table created successfully");
 		return true; 
 	}
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Selects everything from the USER table
 	 */
-	private static void selectOperation()
+	public static void selectOperation()
 	{
 		try{
 			stmt = c.createStatement();
@@ -214,7 +215,7 @@ public class Database
 	 * @param String[] takes tablesName, updateColumnName, UpdateColumnNameValue, whereColumnName, whereColumnNameValue
 	 * @returns boolean true if update successful, false if otherwise
 	 */
-	private static boolean updateOperation(String[] command)
+	public static boolean updateOperation(String[] command)
 	{// needs table name, colum name, value, whereCommand, whereCommandValue
 		try
 		{
@@ -227,7 +228,6 @@ public class Database
 		 {
 		      return false; 
 		 }
-		 System.out.println("Updating done successfully");
 		 return true; 
 	}
 //--------------------------------------------------------------------------------------------------------------------------
@@ -236,7 +236,7 @@ public class Database
 	 *@param String, String  table name and id number
 	 *@returns boolean true if deletion successful, false if otherwise 
 	 */
-	private static boolean deleteOperation(String tableName, String id)
+	public static boolean deleteOperation(String tableName, String id)
 	{
 		try
 		{
@@ -250,7 +250,6 @@ public class Database
 		 {
 		      return false; 
 		 }
-		 System.out.println("Deletion done successfully");
 		 return true; 
 	}
 //--------------------------------------------------------------------------------------------------------------------------
@@ -259,7 +258,7 @@ public class Database
 	 * @param 
 	 * @returns boolean true database dropped successful, false if otherwise
 	 */
-	private static boolean dropTable(String tableName)
+	public static boolean dropTable(String tableName)
 	{
 		try
 		{
@@ -273,23 +272,21 @@ public class Database
 		 {
 		      return false; 
 		 }
-		 System.out.println("Dropped table successfully");
 		 return true; 
 	}
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Closes maze database
 	 */
-	private static void close()
+	public static boolean close()
 	{
 		try{
 			c.close();
 		}catch ( Exception e )
 		 {
-		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		      System.exit(0);
+		      return false; 
 		 }
-		 System.out.println("Closed successfully");
+		 return true;
 	}
 }
 
