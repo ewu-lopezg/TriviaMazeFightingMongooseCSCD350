@@ -37,7 +37,7 @@ public class Database
 	 * For the QUESTIONS table: tablename,QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE.
 	 * @param String[] takes ([0]=tableName, [1]=colum1, [2]=colum2, [3]=colum3, [4]=colum4, [5]=colum5, [6]=colum6)
 	 */
-	public DatabaseClass(String[] command)
+	public Database(String[] command)
 	{
 		if(command[0] == "questions")
 		{
