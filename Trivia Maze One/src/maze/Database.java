@@ -1,3 +1,10 @@
+/*
+ * Trivia Maze Database 
+ * @author Fighting Mongoose
+ * @version 1.0z build Nov 9, 2014
+ * 
+ */
+
 package maze;
 
 import java.sql.*;
