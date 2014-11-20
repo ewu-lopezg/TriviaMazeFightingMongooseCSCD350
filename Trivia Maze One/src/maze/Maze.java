@@ -7,7 +7,7 @@ public class Maze
 	private Player one;
 	private Location start;
 	private Room[][] map;
-	private int size = 5;
+	private int size = 3;
 	
 	public Maze()
 	{
@@ -58,6 +58,8 @@ public class Maze
 					
 			}
 		}
+		
+		this.visit();
 		//constructor
 	}//end constructor
 	
@@ -121,5 +123,24 @@ public class Maze
 		
 		if(moved)
 			one.move(new Location(curr.getX(), curr.getY() +1));
+	}
+	
+	public String visit()
+	{
+		String temp = "";
+//		System.out.println("rooms from left to right, top to bottom");
+		for(int col = 0; col < this.size; col++)
+		{
+			for(int row = 0; row < this.size; row++)
+			{
+				temp = temp + map[col][row].visit();
+			}
+		}
+//		System.out.println(temp);
+		return temp;
+	}
+	public int getSize()
+	{
+		return this.size;
 	}
 }

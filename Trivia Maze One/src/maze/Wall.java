@@ -18,5 +18,10 @@ public class Wall implements I_Path
 		return false;
 		
 	}
+	
+	public String visit()
+	{
+		return "w ";
+	}
 
 }

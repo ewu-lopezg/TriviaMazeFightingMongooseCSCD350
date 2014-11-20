@@ -6,4 +6,5 @@ public interface I_Status
 	public boolean isPassable();
 	public boolean hasQuestion();
 	public String[] getQuestion();
+	public String visit();
 }

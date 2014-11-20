@@ -8,6 +8,11 @@ public class Locked implements I_Status
 	{
 		return false;
 	}
+	
+	public String visit()
+	{
+		return "l ";
+	}
 
 	@Override
 	public boolean isPassable() 

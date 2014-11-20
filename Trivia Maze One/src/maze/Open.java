@@ -10,6 +10,10 @@ public class Open implements I_Status
 
 	}
 
+	public String visit()
+	{
+		return "o ";
+	}
 	@Override
 	public boolean isPassable() 
 	{

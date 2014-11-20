@@ -27,6 +27,11 @@ public class Door implements I_Path
 	{
 		return this.status.isPassable();
 	}
+	
+	public String visit()
+	{
+		return this.status.visit();
+	}
 
 	@Override
 	public boolean move() 

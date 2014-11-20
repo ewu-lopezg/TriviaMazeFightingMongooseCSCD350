@@ -49,5 +49,10 @@ public class Closed implements I_Status
 		
 		return null;
 	}
+	
+	public String visit()
+	{
+		return "c ";
+	}
 
 }

@@ -10,6 +10,11 @@ public class Room
 	public Room()
 	{
 	}
+	
+	public String visit()
+	{
+		return this.up.visit() + this.right.visit() + this.down.visit() + this. left.visit();
+	}
 	// move right
 	public void setUp(I_Path passed)
 	{
