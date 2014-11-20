@@ -25,6 +25,7 @@ public class GuiWindow {
 
 	private JFrame frame;
 	private static Maze one;
+	private static mapPanel map;
 
 	/**
 	 * Launch the application.
@@ -63,18 +64,6 @@ public class GuiWindow {
 		layeredPane.setBounds(0, 0, 626, 363);
 		frame.getContentPane().add(layeredPane);
 		layeredPane.setLayout(null);
-
-		
-		final TextField words = new TextField();
-		words.setBounds(108, 56, 143, 23);
-		layeredPane.add(words);
-		
-		
-		final JTextArea map = new JTextArea();
-		map.setBounds(39, 128, 331, 198);
-		map.setText(one.mazeString());
-		layeredPane.add(map);
-		map.setText(one.mazeString());
 		
 		
 		JButton btnUp_1 = new JButton("up");
@@ -83,8 +72,10 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				one.moveUp();//-----------------------------------------------------move up
-				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
-				map.setText(one.mazeString());
+				map = new mapPanel();
+				map.setBounds(0, 22, 509, 341);
+				map.readMap(one.getSize(),one.visit(),one.getPlayer().getLocation());
+				layeredPane.add(map);
 			}
 		});
 		layeredPane.add(btnUp_1);
@@ -95,8 +86,11 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent e) 
 			{
 				one.moveDown();//-----------------------------------------------------move down
-				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
-				map.setText(one.mazeString());
+				map = new mapPanel();
+				map.setBounds(0, 22, 509, 341);
+				map.readMap(one.getSize(),one.visit(),one.getPlayer().getLocation());
+				layeredPane.add(map);
+
 			}
 		});
 		layeredPane.add(btnDown);
@@ -107,8 +101,10 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent e) 
 			{
 				one.moveLeft();//----------------------------------------------------left
-				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
-				map.setText(one.mazeString());
+				map = new mapPanel();
+				map.setBounds(0, 22, 509, 341);
+				map.readMap(one.getSize(),one.visit(),one.getPlayer().getLocation());
+				layeredPane.add(map);
 			}
 		});
 		layeredPane.add(btnLeft);
@@ -119,8 +115,10 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent e)
 			{
 				one.moveRight();//-------------------------------------------------right
-				words.setText(one.getPlayer().getLocation().getX() + ", " + one.getPlayer().getLocation().getY());
-				map.setText(one.mazeString());
+				map = new mapPanel();
+				map.setBounds(0, 22, 509, 341);
+				map.readMap(one.getSize(),one.visit(),one.getPlayer().getLocation());
+				layeredPane.add(map);
 			}
 		});
 		layeredPane.add(btnRight);
@@ -160,6 +158,11 @@ public class GuiWindow {
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
+		
+		map = new mapPanel();
+		map.setBounds(0, 22, 509, 341);
+		map.readMap(one.getSize(),one.visit(),one.getPlayer().getLocation());
+		layeredPane.add(map);
 
 	}
 }
