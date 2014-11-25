@@ -12,12 +12,16 @@ public class Door implements I_Path
 		
 //		this.status = new Open();
 	}
+	public Door(I_Status passed)
+	{
+		this.status = passed;
+	}
 	
 //	public void SetRooms(Room one, Room two)
 //	{
 		
 //	}
-	private void setStatus(I_Status newStatus)
+	private void setStatus(I_Status newStatus) //----------
 	{
 		this.status = newStatus;
 	}

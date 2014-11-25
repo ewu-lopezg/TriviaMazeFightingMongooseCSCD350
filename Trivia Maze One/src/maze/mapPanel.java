@@ -12,7 +12,8 @@ public class mapPanel extends JPanel   //switch to scroll pane
 	private ImageIcon doorh;
 	private ImageIcon wallv;
 	private ImageIcon wallh;
-	private int size;
+	private int sizeCol;
+	private int sizeRow;
 	private String map;
 	private final int base = 100;
 	private final int offsetEnd = 90;
@@ -26,9 +27,10 @@ public class mapPanel extends JPanel   //switch to scroll pane
 		
 	}
 	
-	public void readMap(int s, String str, Location player)
+	public void readMap(int col, int row, String str, Location player)
 	{
-		this.size=s;
+		this.sizeCol=col;
+		this.sizeRow = row;
 		this.map=str;
 		this.player= player;
 	}
@@ -44,9 +46,9 @@ public class mapPanel extends JPanel   //switch to scroll pane
 
 		
 		//--------------------------------paint floors
-		for(int i =0; i < this.size;i++)
+		for(int i =0; i < this.sizeCol;i++)
 		{
-			for(int j = 0; j < this.size;j++)
+			for(int j = 0; j < this.sizeRow;j++)
 			{
 				floor.paintIcon(this, g, place(j), place(i));
 			}
@@ -55,9 +57,9 @@ public class mapPanel extends JPanel   //switch to scroll pane
 		//----------------------------------paint paths
 		String rest = this.map;
 		
-		for(int i =0; i < this.size;i++)
+		for(int i =0; i < this.sizeCol;i++)
 		{
-			for(int j = 0; j < this.size;j++)
+			for(int j = 0; j < this.sizeRow;j++)
 			{
 				String curr = rest.substring(0,8);
 				rest = rest.substring(8);
@@ -86,7 +88,8 @@ public class mapPanel extends JPanel   //switch to scroll pane
 					}
 					
 				}
-				//add fill rect
+				//add fill r
+				
 				
 				
 				//right

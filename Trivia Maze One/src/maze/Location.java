@@ -20,5 +20,8 @@ public class Location
 	{
 		return this.y;
 	}
-	
+	public String toString()
+	{
+		return x+","+y;
+	}
 }
