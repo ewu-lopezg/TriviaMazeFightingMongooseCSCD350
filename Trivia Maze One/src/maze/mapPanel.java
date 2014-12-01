@@ -19,7 +19,7 @@ public class mapPanel extends JPanel   //switch to scroll pane
 	private final int offsetEnd = 90;
 	private final int offsetEdge = 10;
 	private final int offsetPath = 10;
-	private Location player;
+	private Player player;
 	
 	private int place(int val)
 	{
@@ -27,7 +27,7 @@ public class mapPanel extends JPanel   //switch to scroll pane
 		
 	}
 	
-	public void readMap(int col, int row, String str, Location player)
+	public void readMap(int col, int row, String str, Player player)
 	{
 		this.sizeCol=col;
 		this.sizeRow = row;
@@ -171,7 +171,10 @@ public class mapPanel extends JPanel   //switch to scroll pane
 		}
 		
 		g.setColor(Color.BLUE);
-		g.fillOval(place(this.player.getY()) +35,place(this.player.getX())+35, 40, 40);
+		g.fillOval(place(this.player.getLocation().getY()) +35,place(this.player.getLocation().getX())+35, 40, 40);
+		
+		g.setColor(Color.GREEN);
+		g.fillOval(place(this.player.getEnd().getY()) +35,place(this.player.getEnd().getX())+35, 40, 40);
 		
 		
 //		floor.paintIcon(this, g, 0, 0);

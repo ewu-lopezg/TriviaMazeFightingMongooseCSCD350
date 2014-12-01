@@ -24,4 +24,13 @@ public class Location
 	{
 		return x+","+y;
 	}
+	
+	@Override
+	public boolean equals(Object end) 
+	{
+		
+		if(this.x == ((Location)end).getX() && this.y == ((Location)end).getY())
+			return true;
+		return false;
+	}
 }

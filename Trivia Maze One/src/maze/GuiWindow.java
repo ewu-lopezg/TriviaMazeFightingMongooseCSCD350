@@ -14,6 +14,7 @@ import java.awt.TextArea;
 import java.awt.TextField;
 import java.io.PrintStream;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -83,8 +84,14 @@ public class GuiWindow {
 				one.moveUp();//-----------------------------------------------------move up
 				map = new mapPanel();
 				map.setBounds(0, 22, 509, 341);
-				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer().getLocation());
+				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer());
 				layeredPane.add(map);
+				
+				if(one.won())
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+				
+				if(!one.isWinnable())
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
 			}
 		});
 		layeredPane.add(btnUp_1);
@@ -97,9 +104,14 @@ public class GuiWindow {
 				one.moveDown();//-----------------------------------------------------move down
 				map = new mapPanel();
 				map.setBounds(0, 22, 509, 341);
-				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer().getLocation());
+				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer());
 				layeredPane.add(map);
-
+				
+				if(one.won())
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+				
+				if(!one.isWinnable())
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
 			}
 		});
 		layeredPane.add(btnDown);
@@ -112,8 +124,14 @@ public class GuiWindow {
 				one.moveLeft();//----------------------------------------------------left
 				map = new mapPanel();
 				map.setBounds(0, 22, 509, 341);
-				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer().getLocation());
+				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer());
 				layeredPane.add(map);
+				
+				if(one.won())
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+				
+				if(!one.isWinnable())
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
 			}
 		});
 		layeredPane.add(btnLeft);
@@ -126,8 +144,14 @@ public class GuiWindow {
 				one.moveRight();//-------------------------------------------------right
 				map = new mapPanel();
 				map.setBounds(0, 22, 509, 341);
-				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer().getLocation());
+				map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer());
 				layeredPane.add(map);
+				
+				if(one.won())
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+				
+				if(!one.isWinnable())
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
 			}
 		});
 		layeredPane.add(btnRight);
@@ -170,7 +194,7 @@ public class GuiWindow {
 		
 		map = new mapPanel();
 		map.setBounds(0, 22, 509, 341);
-		map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer().getLocation());
+		map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer());
 		layeredPane.add(map);
 
 	}

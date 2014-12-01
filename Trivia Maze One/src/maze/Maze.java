@@ -5,8 +5,8 @@ import java.util.*;
 public class Maze 
 {
 	private Player one;
-	private Location start;
-	private Location end;
+//	private Location start;
+//	private Location end;
 	private Room[][] map;
 	private int sizeRow;
 	private int sizeCol;
@@ -23,8 +23,8 @@ public class Maze
 			 this.sizeCol = temp[1];
 			 
 			 temp = this.parseInts(passed[1]); //get start location
-			 this.start = new Location(temp[0],temp[1]); 
-			 this.one = new Player(this.start);
+			// this.start = new Location(temp[0],temp[1]); 
+			 this.one = new Player(new Location(temp[0],temp[1]), new Location(this.sizeCol-1,this.sizeRow -1));
 			 
 			 map =  new Room[sizeRow][sizeCol];
 	
@@ -103,13 +103,18 @@ public class Maze
 		
 	}
 	
+//	public Location getEnd()
+//	{
+//		return this.end;
+//	}
+	
 	public Maze()
 	{
-		start = new Location(0,0);
-		end = new Location(3,3);
+		Location start = new Location(0,0);
+		Location end = new Location(3,3);
 		this.sizeRow = 3;
 		this.sizeCol = 3;
-		one = new Player(start);
+		one = new Player(start, end);
 		map =  new Room[sizeCol][sizeRow];
 		
 //------------------------------------------------------make rooms	and walls	
@@ -184,7 +189,6 @@ public class Maze
 	
 	public void moveDown()
 	{
-//		System.out.print("move right to a ");
 		Location curr = one.getLocation();
 		Location next;
 		boolean moved = map[curr.getX()][curr.getY()].getDown().move();
@@ -245,4 +249,56 @@ public class Maze
 	{
 		return this.sizeCol;
 	}
+	
+	public boolean won()
+	{
+		return this.one.won();
+	}
+	
+	public boolean isWinnable()
+	{
+		ArrayList<Location> list = new ArrayList<Location>();
+		return isWinnable(one.getLocation(),list, one.getEnd());
+//		return isWinnable(map[one.getLocation().getX()][one.getLocation().getY()],list,map[one.getEnd().getX()][one.getEnd().getY()]);
+		
+	}
+	
+	
+	private boolean isWinnable(Location curr, ArrayList<Location> checked, Location target)
+	{	
+				//base
+		if(curr.equals(target))
+			return true;
+		
+		boolean pathUp = false;
+		boolean pathRight = false;
+		boolean pathDown = false;
+		boolean pathLeft= false;
+		
+		Room temp = map[curr.getX()][curr.getY()];
+		checked.add(curr);
+		
+		Location up =new Location(curr.getX()-1, curr.getY());
+		if(temp.getUp().isPassable() && !checked.contains(up))// isPassable-valid- and not on list
+			pathUp = isWinnable(up,checked, target);
+		
+		Location right =new Location(curr.getX(), curr.getY()+1);
+		if(temp.getRight().isPassable() && !checked.contains(right))// isPassable-valid- and not on list
+			pathRight = isWinnable(right,checked, target);
+		
+		Location down =new Location(curr.getX()+1, curr.getY());
+		if(temp.getDown().isPassable() && !checked.contains(down))// isPassable-valid- and not on list
+			pathDown =  isWinnable(down,checked, target);
+		
+		Location left =new Location(curr.getX(), curr.getY()-1);
+		if(temp.getLeft().isPassable() && !checked.contains(left))// isPassable-valid- and not on list
+			pathLeft = isWinnable(left,checked, target);
+			
+		if(pathUp || pathRight || pathDown || pathLeft)
+			return true;
+		
+		else 
+			return false;
+	}
+	
 }
