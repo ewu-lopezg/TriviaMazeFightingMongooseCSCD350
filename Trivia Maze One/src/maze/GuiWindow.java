@@ -184,6 +184,10 @@ public class GuiWindow {
 		menuBar.add(mnEdit);
 		
 		JMenuItem mntmDatabase = new JMenuItem("Database");
+		mntmDatabase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		mnEdit.add(mntmDatabase);
 		
 		JMenu mnHelp = new JMenu("Help");
