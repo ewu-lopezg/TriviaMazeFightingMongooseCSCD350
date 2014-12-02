@@ -8,11 +8,15 @@
 package maze;
 
 import java.sql.*;
+import java.util.*;
 
 public class Database 
 {
 	private static Connection c = null;
 	private static Statement stmt = null;
+	private static String save = "";
+	private static ArrayList usedQuestionId = new ArrayList();
+
 	
 	/*public static void main (String args[])
 	{
@@ -155,11 +159,13 @@ public class Database
 	/*
 	 * Selects everything from the USER table
 	 */
-	public static void selectOperation()
-	{
+	public static ResultSet selectOperation()
+	{	
+		ResultSet result = null;
 		try{
 			stmt = c.createStatement();
-			ResultSet result = stmt.executeQuery("SELECT * FROM USER;");
+			result = stmt.executeQuery("SELECT * FROM USER;");
+			
 			while(result.next())
 			{
 				int id = result.getInt("id");
@@ -183,10 +189,12 @@ public class Database
 			stmt.close();
 		}catch(Exception e)
 		 {
+			
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
-		}	
+		}
+		return result;
 	}
+
 //--------------------------------------------------------------------------------------------------------------------------
 	/*private static void insertOperation()
 	{
@@ -274,6 +282,65 @@ public class Database
 		 }
 		 return true; 
 	}
+	//--------------------------------------------------------------------------------------------------------------------------
+		/*
+		 * getQuestion will traverse through the database questions and grab only the none repeated question. 
+		 * @returns String[] returns a question array, where [0]=question, [1]=answer, [2]=poss1, [3]=poss2, [4]=poss3
+		 */
+		public static String[] getQuestion()
+		{			
+			String [] question = new String[6];	
+			Arrays.fill(question, "E");
+			
+			int found = 0;
+			
+			ResultSet result = null;
+			
+			try{
+				stmt = c.createStatement();
+				result = stmt.executeQuery("SELECT * FROM QUESTIONS;");
+				
+				while(result.next() && found !=1)
+				{
+					int id = result.getInt("id");
+					String quest = result.getString("question");
+					String answer  = result.getString("answer");
+					String poss1 = result.getString("possible1");
+					String poss2 = result.getString("possible2");
+					String poss3 = result.getString("possible3");
+					boolean isTrueFalse = result.getBoolean("truefalse");
+					
+					if(isTrueFalse && !usedQuestionId.contains(id))
+					{
+						question[0] = quest; 
+						question[1] = answer; 
+						question[2] = poss1; 
+						question[3] = poss2; 
+						found = 1; 
+						usedQuestionId.add(id);
+					}
+					if(!isTrueFalse && !usedQuestionId.contains(id))
+					{
+						question[0] = quest; 
+						question[1] = answer; 
+						question[2] = poss1; 
+						question[3] = poss2; 
+						question[4] = poss3; 
+						found = 1;
+						usedQuestionId.add(id);
+					}
+				}
+				System.out.println("Select database successfully\n");
+				result.close();
+				stmt.close();
+			
+			}catch(Exception e)
+			 {
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			}
+			return question; 
+		}
+
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Closes maze database
@@ -288,6 +355,23 @@ public class Database
 		 }
 		 return true;
 	}
+	//--------------------------------------------------------------------------------------------------------------------------
+		/*
+		 * Opens maze database
+		 */
+		public Connection dbConnection() {
+			try{
+				Class.forName("org.sqlite.JDBC");
+				c = DriverManager.getConnection("jdbc:sqlite:maze.db");
+				c.setAutoCommit(false);
+				return c; 
+			}catch(Exception e)
+			{
+				return null; 
+			}
+			
+		}
+
 }
 
 
