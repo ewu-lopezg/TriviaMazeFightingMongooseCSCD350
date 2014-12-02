@@ -80,7 +80,7 @@ public class EditDatabase extends JFrame {
 		contentPane.setLayout(cl); 	//cardlayout
 		contentPane.setVisible(true);
 		
-		JPanel AdminMain = new JPanel();
+		AdminMain = new JPanel();
 		contentPane.add(AdminMain, "name_25921842956592");
 		AdminMain.setLayout(null);
 		AdminMain.setVisible(false);  
@@ -127,7 +127,7 @@ public class EditDatabase extends JFrame {
 		btnNewButton.setBounds(447, 306, 99, 25);
 		AdminMain.add(btnNewButton);
 		
-		JPanel add = new JPanel();
+		add = new JPanel();
 		contentPane.add(add, "name_25930192889649");
 		add.setLayout(null);
 		add.setVisible(false);
@@ -199,7 +199,7 @@ public class EditDatabase extends JFrame {
 		lblD.setBounds(12, 240, 534, 58);
 		add.add(lblD);
 		
-		JPanel delete = new JPanel();
+		delete = new JPanel();
 		contentPane.add(delete, "name_26062747484153");
 		delete.setLayout(null);
 		delete.setVisible(false);
