@@ -193,7 +193,8 @@ public class GuiWindow {
 		mnHelp.add(mntmAbout);
 		
 		map = new mapPanel();
-		map.setBounds(0, 22, 509, 341);
+		//map.setBounds(0, 22, 509, 341);
+		
 		map.readMap(one.getSizeCol(),one.getSizeRow(),one.visit(),one.getPlayer());
 		layeredPane.add(map);
 
