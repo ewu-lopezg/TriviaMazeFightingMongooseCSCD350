@@ -18,23 +18,24 @@ public class Database
 	private static ArrayList usedQuestionId = new ArrayList();
 
 	
-	/*public static void main (String args[])
+	public static void main (String args[])
 	{
 		//if not exist 
 		//when creating, deleting, inserting 
 		//Insertion: check if username already exists 
 		//if database dropped than SELECT cannot print
 		
-			//openTable();
-			//createTable();
-			//insertOperation();
+			openTable();
+			createTable();
+			insertOperation();
 			//updateOperation();
 			//deleteOperation();			
 			//selectOperation();
 			//dropTable("user");
-			//selectOperation();
+			//dropTable("question");
+			selectOperation();
 			//close();
-	}*/
+	}
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Takes command for both tables(USER and QUESTIONS). For the USER table: tablename,USERNAME,PASSWORD,ADMIN,SAVE,LOCATION 
@@ -131,21 +132,21 @@ public class Database
 			String sql = "CREATE TABLE IF NOT EXISTS USER" +
 	                   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 	                   "USERNAME CHAR(10) NOT NULL, " + 
-	                   " PASSWORD INT NOT NULL, " + 
-	                   " ADMIN BOOLEAN NOT NULL, " +
-	                   " SAVE CHAR(255) , " +
-	                   " LOCATION CHAR(255));"; 
+	                   "PASSWORD INT NOT NULL, " + 
+	                   "ADMIN BOOLEAN NOT NULL, " +
+	                   "SAVE CHAR(74) , " +
+	                   "LOCATION CHAR(6));"; 
 			stmt.executeUpdate(sql);
-			
 			
 			sql = "CREATE TABLE IF NOT EXISTS QUESTIONS" +
 	                   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-	                   " QUESTION CHAR(255) NOT NULL, " + 
-	                   " ANSWER CHAR(255) NOT NULL, " + 
-	                   " POSSIBLE1 CHAR(255) NOT NULL, " + 
-	                   " POSSIBLE2 CHAR(255) NOT NULL, " +
-	                   " POSSIBLE3 CHAR(255) NOT NULL, " + 
-	                   " TRUEFALSE BOOLEAN NOT NULL);";
+	                   "QUESTION CHAR(255) NOT NULL, " + 
+	                   "ANSWER CHAR(255) NOT NULL, " + 
+	                   "POSSIBLE1 CHAR(255) NOT NULL, " + 
+	                   "POSSIBLE2 CHAR(255) NOT NULL, " +
+	                   "POSSIBLE3 CHAR(255) NOT NULL, " + 
+	                   "TRUEFALSE BOOLEAN NOT NULL, " +
+	                   "USED CHAR(34) NOT NULL);";
 			stmt.executeUpdate(sql);
 	
 			stmt.close();
@@ -196,7 +197,7 @@ public class Database
 	}
 
 //--------------------------------------------------------------------------------------------------------------------------
-	/*private static void insertOperation()
+	private static void insertOperation()
 	{
 		try{
 			stmt = c.createStatement();
@@ -204,8 +205,8 @@ public class Database
 	                   "VALUES ('glopez227777','2000', 0, NULL, NULL);";
 				stmt.executeUpdate(sql);
 				
-			sql = "INSERT INTO QUESTIONS (QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE) " +
-		                  "VALUES ('From what city are the EWU','Cheney', 'Spokane', 'Medical Lake', 'Airway Heights', 1);";
+			sql = "INSERT INTO QUESTIONS (QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE, USED) " +
+		                  "VALUES ('From what city are the EWU','Cheney', 'Spokane', 'Medical Lake', 'Airway Heights', 1, '12 22');";
 				stmt.executeUpdate(sql);
 				
 			stmt.close();
@@ -216,7 +217,7 @@ public class Database
 			System.exit(0);
 		}
 		System.out.println("Records created successfully");
-	}	*/
+	}	
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Updates either USER or QUESTIONS table depending on the command[0]
@@ -355,7 +356,11 @@ public class Database
 		 }
 		 return true;
 	}
-	//--------------------------------------------------------------------------------------------------------------------------
+	public void getLoadMap()
+	{
+		
+	}
+//--------------------------------------------------------------------------------------------------------------------------
 		/*
 		 * Opens maze database
 		 */
