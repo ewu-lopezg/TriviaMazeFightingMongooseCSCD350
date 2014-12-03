@@ -111,7 +111,7 @@ public class Maze
 	public Maze()
 	{
 		Location start = new Location(0,0);
-		Location end = new Location(3,3);
+		Location end = new Location(2,2);
 		this.sizeRow = 3;
 		this.sizeCol = 3;
 		one = new Player(start, end);

@@ -21,6 +21,17 @@ public class mapPanel extends JPanel   //switch to scroll pane
 	private final int offsetPath = 10;
 	private Player player;
 	
+	public mapPanel()
+	{
+		super();
+		floor = new ImageIcon("floor.png");
+		doorv = new ImageIcon("doorv.png");
+		doorh = new ImageIcon("doorh.png");
+		wallv = new ImageIcon("wallv.png");
+		wallh = new ImageIcon("wallh.png");
+		
+	}
+	
 	private int place(int val)
 	{
 		return val * base + offsetEdge;
@@ -38,11 +49,11 @@ public class mapPanel extends JPanel   //switch to scroll pane
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		floor = new ImageIcon("floor.png");
-		doorv = new ImageIcon("doorv.png");
-		doorh = new ImageIcon("doorh.png");
-		wallv = new ImageIcon("wallv.png");
-		wallh = new ImageIcon("wallh.png");
+//		floor = new ImageIcon("floor.png");
+//		doorv = new ImageIcon("doorv.png");
+//		doorh = new ImageIcon("doorh.png");
+//		wallv = new ImageIcon("wallv.png");
+//		wallh = new ImageIcon("wallh.png");
 
 		
 		//--------------------------------paint floors
