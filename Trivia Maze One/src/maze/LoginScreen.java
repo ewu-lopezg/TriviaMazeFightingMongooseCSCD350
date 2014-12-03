@@ -5,10 +5,12 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -19,6 +21,7 @@ public class LoginScreen extends JDialog {
 	private JTextField usernameTextField;
 	private JTextField passwordTextField;
 	private JTextField reenterTextField;
+	private static Database database = new Database();
 
 	/**
 	 * Launch the application.
@@ -52,6 +55,7 @@ public class LoginScreen extends JDialog {
 		contentPanel.add(passwordLabel);
 		
 		JLabel reenterLabel = new JLabel("Re-enter:");
+		reenterLabel.setEnabled(false);
 		reenterLabel.setBounds(12, 133, 56, 16);
 		contentPanel.add(reenterLabel);
 		
@@ -66,6 +70,7 @@ public class LoginScreen extends JDialog {
 		passwordTextField.setColumns(10);
 		
 		reenterTextField = new JTextField();
+		reenterTextField.setEnabled(false);
 		reenterTextField.setBounds(78, 130, 331, 22);
 		contentPanel.add(reenterTextField);
 		reenterTextField.setColumns(10);
@@ -75,6 +80,31 @@ public class LoginScreen extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						if(!reenterTextField.isEnabled())
+						{
+							if(database.checkLogginCredentials(usernameTextField.getText(), passwordTextField.getText()))
+							{
+								JOptionPane.showMessageDialog(null,"Congrats you logged in");
+								LoginScreen.this.dispose();
+							}
+							else{
+								JOptionPane.showMessageDialog(null,"Username does not match, Please try again");
+								usernameTextField.setText("");
+							}
+						}
+						else
+						{
+							if(usernameTextField.getText().compareTo("") == 0)
+							{
+								JOptionPane.showMessageDialog(null, "Empty");
+							}
+						}
+						
+						
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);

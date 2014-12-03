@@ -10,6 +10,8 @@ package maze;
 import java.sql.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 public class Database 
 {
 	private static Connection c = null;
@@ -34,7 +36,17 @@ public class Database
 			//dropTable("user");
 			//dropTable("question");
 			selectOperation();
-			//close();
+			//selectOperationQuestions();
+			//String[] s = getQuestion();
+			//Print(s);
+			close();
+	}
+	public static void Print(String[] s)
+	{
+		for(int index = 0; index < s.length; index++)
+		{
+			System.out.println("Index [" +  index + "] " + s[index] );
+		}
 	}
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
@@ -108,7 +120,7 @@ public class Database
 	{		
 		try{
 			stmt = c.createStatement();
-			String sql = "INSERT INTO USER (ID,USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
+			String sql = "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
 	                   "VALUES (" + command[1] +"," + command[2] + ", " + command[3] + ", "+ command[4] +", NULL, NULL);";
 				stmt.executeUpdate(sql);
 				
@@ -116,6 +128,7 @@ public class Database
 			c.commit();
 		}catch(Exception e)
 		 {
+			JOptionPane.showMessageDialog(null,"Username Already Exist, Please try again.");
 			return false; 
 		}
 		return true; 
@@ -131,27 +144,29 @@ public class Database
 			stmt = c.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS USER" +
 	                   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-	                   "USERNAME CHAR(10) NOT NULL, " + 
+	                   "USERNAME VARCHAR(10) NOT NULL, " + 
 	                   "PASSWORD INT NOT NULL, " + 
 	                   "ADMIN BOOLEAN NOT NULL, " +
-	                   "SAVE CHAR(74) , " +
-	                   "LOCATION CHAR(6));"; 
+	                   "SAVE VARCHAR(74) , " +
+	                   "LOCATION VARCHAR(6), " +
+	                   "UNIQUE(USERNAME));"; 
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE IF NOT EXISTS QUESTIONS" +
 	                   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-	                   "QUESTION CHAR(255) NOT NULL, " + 
-	                   "ANSWER CHAR(255) NOT NULL, " + 
-	                   "POSSIBLE1 CHAR(255) NOT NULL, " + 
-	                   "POSSIBLE2 CHAR(255) NOT NULL, " +
-	                   "POSSIBLE3 CHAR(255) NOT NULL, " + 
+	                   "QUESTION VARCHAR(255) NOT NULL, " + 
+	                   "ANSWER VARCHAR(255) NOT NULL, " + 
+	                   "POSSIBLE1 VARCHAR(255) NOT NULL, " + 
+	                   "POSSIBLE2 VARCHAR(255) NOT NULL, " +
+	                   "POSSIBLE3 VARCHAR(255) NOT NULL, " + 
 	                   "TRUEFALSE BOOLEAN NOT NULL, " +
-	                   "USED CHAR(34) NOT NULL);";
+	                   "USED VARCHAR(34) NOT NULL);";
 			stmt.executeUpdate(sql);
 	
 			stmt.close();
 		}catch(Exception e)
 		 {
+			JOptionPane.showMessageDialog(null, "Something went wrong");
 			return false; 
 		}
 		return true; 
@@ -196,6 +211,46 @@ public class Database
 		return result;
 	}
 
+	public static ResultSet selectOperationQuestions()
+	{	
+		//QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE, USED
+		ResultSet result = null;
+		try{
+			stmt = c.createStatement();
+			result = stmt.executeQuery("SELECT * FROM QUESTIONS;");
+			
+			while(result.next())
+			{
+				int id = result.getInt("id");
+				String question = result.getString("question");
+				String answer  = result.getString("answer");
+				String poss1 = result.getString("possible1");
+				String poss2 = result.getString("possible2");
+				String poss3 = result.getString("possible3");
+				boolean truefalse = result.getBoolean("truefalse");
+				String used = result.getString("used");
+				
+				System.out.println();
+				System.out.println("ID = " + id);
+				System.out.println("question = " + question);
+				System.out.println("answer = " + answer);
+				System.out.println("Possible1 = " + poss1);
+				System.out.println("Possible2 = " + poss2);
+				System.out.println("possible3 = " + poss3);
+				System.out.println("truefalse = " + truefalse);
+				System.out.println("used = " + used);
+			}
+			System.out.println("Select database successfully\n");
+			result.close();
+			
+			stmt.close();
+		}catch(Exception e)
+		 {
+			
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return result;
+	}
 //--------------------------------------------------------------------------------------------------------------------------
 	private static void insertOperation()
 	{
@@ -213,8 +268,7 @@ public class Database
 			c.commit();
 		}catch(Exception e)
 		 {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
+			JOptionPane.showMessageDialog(null, "Data already exist");	
 		}
 		System.out.println("Records created successfully");
 	}	
@@ -239,6 +293,7 @@ public class Database
 		 }
 		 return true; 
 	}
+	
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 *Deletes from tables specified with the string id number.
@@ -288,60 +343,59 @@ public class Database
 		 * getQuestion will traverse through the database questions and grab only the none repeated question. 
 		 * @returns String[] returns a question array, where [0]=question, [1]=answer, [2]=poss1, [3]=poss2, [4]=poss3
 		 */
-		public static String[] getQuestion()
-		{			
-			String [] question = new String[6];	
-			Arrays.fill(question, "E");
+	public static String[] getQuestion()
+	{			
+		String [] question = new String[6];	
+		Arrays.fill(question, "E");
+		
+		int found = 0;
+		
+		ResultSet result = null;
+		
+		try{
+			stmt = c.createStatement();
+			result = stmt.executeQuery("SELECT * FROM QUESTIONS;");
 			
-			int found = 0;
-			
-			ResultSet result = null;
-			
-			try{
-				stmt = c.createStatement();
-				result = stmt.executeQuery("SELECT * FROM QUESTIONS;");
+			while(result.next() && found !=1)
+			{
+				int id = result.getInt("id");
+				String quest = result.getString("question");
+				String answer  = result.getString("answer");
+				String poss1 = result.getString("possible1");
+				String poss2 = result.getString("possible2");
+				String poss3 = result.getString("possible3");
+				boolean isTrueFalse = result.getBoolean("truefalse");
 				
-				while(result.next() && found !=1)
+				if(isTrueFalse && !usedQuestionId.contains(id))
 				{
-					int id = result.getInt("id");
-					String quest = result.getString("question");
-					String answer  = result.getString("answer");
-					String poss1 = result.getString("possible1");
-					String poss2 = result.getString("possible2");
-					String poss3 = result.getString("possible3");
-					boolean isTrueFalse = result.getBoolean("truefalse");
-					
-					if(isTrueFalse && !usedQuestionId.contains(id))
-					{
-						question[0] = quest; 
-						question[1] = answer; 
-						question[2] = poss1; 
-						question[3] = poss2; 
-						found = 1; 
-						usedQuestionId.add(id);
-					}
-					if(!isTrueFalse && !usedQuestionId.contains(id))
-					{
-						question[0] = quest; 
-						question[1] = answer; 
-						question[2] = poss1; 
-						question[3] = poss2; 
-						question[4] = poss3; 
-						found = 1;
-						usedQuestionId.add(id);
-					}
+					question[0] = quest; 
+					question[1] = answer; 
+					question[2] = poss1; 
+					question[3] = poss2; 
+					found = 1; 
+					usedQuestionId.add(id);
 				}
-				System.out.println("Select database successfully\n");
-				result.close();
-				stmt.close();
-			
-			}catch(Exception e)
-			 {
-				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+				if(!isTrueFalse && !usedQuestionId.contains(id))
+				{
+					question[0] = quest; 
+					question[1] = answer; 
+					question[2] = poss1; 
+					question[3] = poss2; 
+					question[4] = poss3; 
+					found = 1;
+					usedQuestionId.add(id);
+				}
 			}
-			return question; 
+			System.out.println("Select database successfully\n");
+			result.close();
+			stmt.close();
+		
+		}catch(Exception e)
+		 {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
-
+		return question; 
+	}	
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Closes maze database
@@ -375,6 +429,30 @@ public class Database
 				return null; 
 			}
 			
+		}
+		public boolean checkLogginCredentials(String username, String password) 
+		{
+			ResultSet result = null;
+			try{
+				stmt = c.createStatement();
+				result = stmt.executeQuery("SELECT USERNAME, PASSWORD FROM USER;");
+				
+				while(result.next())
+				{
+					if((result.getString("username").compareTo(username) == 0) && (result.getString("password").compareTo(password) ==0))
+					{
+						return true; 
+					}
+				}
+				System.out.println("Select database successfully\n");
+				result.close();
+				stmt.close();
+			
+			}catch(Exception e)
+			 {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			} 
+			return false;
 		}
 
 }
