@@ -26,10 +26,16 @@ public class Database
 		//when creating, deleting, inserting 
 		//Insertion: check if username already exists 
 		//if database dropped than SELECT cannot print
-		
+		// "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
+        // "VALUES (" + command[1] +"," + command[2] + ", " + command[3] + ", "+ ", NULL, NULL);";
 			openTable();
 			createTable();
-			insertOperation();
+			//insertOperation();
+			String[] s = new String[4];
+			s[1] = "glopez";
+			s[2] = "2000";
+			s[3] = "0"; 
+			insertToUserTable(s);
 			//updateOperation();
 			//deleteOperation();			
 			//selectOperation();
@@ -121,7 +127,7 @@ public class Database
 		try{
 			stmt = c.createStatement();
 			String sql = "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
-	                   "VALUES (" + command[1] +"," + command[2] + ", " + command[3] + ", "+ command[4] +", NULL, NULL);";
+	                   "VALUES ('" + command[1] +"','" + command[2] + "'," + command[3] + ", NULL, NULL);";
 				stmt.executeUpdate(sql);
 				
 			stmt.close();
@@ -410,10 +416,6 @@ public class Database
 		 }
 		 return true;
 	}
-	public void getLoadMap()
-	{
-		
-	}
 //--------------------------------------------------------------------------------------------------------------------------
 		/*
 		 * Opens maze database
@@ -430,6 +432,16 @@ public class Database
 			}
 			
 		}
+		
+		public String[] getLoadedMap()
+		{
+			//if save null load of default(admin)
+			//else load of save
+			//return array size, location, save
+			return null; 
+		}
+//--------------------------------------------------------------------------------------------------------------------------
+				
 		public boolean checkLogginCredentials(String username, String password) 
 		{
 			ResultSet result = null;

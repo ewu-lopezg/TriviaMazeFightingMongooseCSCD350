@@ -20,7 +20,8 @@ public class LoginScreen extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernameTextField;
 	private JTextField passwordTextField;
-	private JTextField reenterTextField;
+	JTextField reenterTextField;
+	JLabel reenterLabel;
 	private static Database database = new Database();
 
 	/**
@@ -54,8 +55,7 @@ public class LoginScreen extends JDialog {
 		passwordLabel.setBounds(12, 106, 71, 16);
 		contentPanel.add(passwordLabel);
 		
-		JLabel reenterLabel = new JLabel("Re-enter:");
-		reenterLabel.setEnabled(false);
+		reenterLabel = new JLabel("Re-enter:");
 		reenterLabel.setBounds(12, 133, 56, 16);
 		contentPanel.add(reenterLabel);
 		
@@ -70,7 +70,6 @@ public class LoginScreen extends JDialog {
 		passwordTextField.setColumns(10);
 		
 		reenterTextField = new JTextField();
-		reenterTextField.setEnabled(false);
 		reenterTextField.setBounds(78, 130, 331, 22);
 		contentPanel.add(reenterTextField);
 		reenterTextField.setColumns(10);
@@ -82,7 +81,8 @@ public class LoginScreen extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if(!reenterTextField.isEnabled())
+						String[] container = new String[4];
+						if(!reenterTextField.isEnabled())//Returned Users
 						{
 							if(database.checkLogginCredentials(usernameTextField.getText(), passwordTextField.getText()))
 							{
@@ -94,15 +94,30 @@ public class LoginScreen extends JDialog {
 								usernameTextField.setText("");
 							}
 						}
-						else
+						else //New users
 						{
-							if(usernameTextField.getText().compareTo("") == 0)
+							if((usernameTextField.getText().compareTo("") == 0) || (passwordTextField.getText().compareTo("") == 0))//if either username or pw empty.
 							{
-								JOptionPane.showMessageDialog(null, "Empty");
+								JOptionPane.showMessageDialog(null, "Please make sure there is a USERNAME and PASSWORD");
+							}
+							else if(passwordTextField.getText().compareTo(reenterTextField.getText()) == 0)//Check if passwords match
+							{//if there is a username and pw
+								container[1] = usernameTextField.getText(); 
+								container[2] = passwordTextField.getText(); 
+								container[3] = "0";
+								if(database.insertToUserTable(container))//will throw error in database side if username already exist.								
+								{
+									LoginScreen.this.dispose();
+								}
+								passwordTextField.setText(""); 
+								reenterTextField.setText("");
+							}
+							else{
+								JOptionPane.showMessageDialog(null,"passwords do not match, please try again");
+								passwordTextField.setText(""); 
+								reenterTextField.setText("");
 							}
 						}
-						
-						
 					}
 				});
 				okButton.setActionCommand("OK");
