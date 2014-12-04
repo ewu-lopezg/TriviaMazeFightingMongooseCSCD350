@@ -38,6 +38,7 @@ public class GuiWindow {
 	private JFrame frame;
 	private Maze maze;
 	private mapPanel map;
+	private LoginScreen login = new LoginScreen();
 
 	/**
 	 * Launch the application.
@@ -72,8 +73,8 @@ public class GuiWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][][][][][][][][][][][][][][]", "[grow][][][][][][][][][]"));
 		
-		mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
-		map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
+		//mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
+		//map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
 //		map = new JPanel();                                                              // for this one
 		map.setBackground(Color.GRAY);
 		frame.getContentPane().add(map, "cell 0 0 16 10,grow");
@@ -164,6 +165,9 @@ public class GuiWindow {
 		mntmNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  //-------------------------make a new game
 			{
+				login.reenterTextField.setEnabled(true);
+				login.reenterLabel.setEnabled(true);
+				login.setVisible(true);
 				String [] p = new String[3];
 				maze = new Maze();
 				frame.getContentPane().remove(map);
@@ -179,14 +183,17 @@ public class GuiWindow {
 			public void actionPerformed(ActionEvent e) {//-------------------------save game
 			}
 		});
-		mnFile.add(mntmSaveGame);
 		
 		JMenuItem mntmLoadGame = new JMenuItem("load game");
 		mntmLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { //----------------------load game
+				login.reenterTextField.setEnabled(false);
+				login.reenterLabel.setEnabled(false);
+				login.setVisible(true);
 			}
 		});
 		mnFile.add(mntmLoadGame);
+		mnFile.add(mntmSaveGame);
 		
 		JMenuItem mntmQuit = new JMenuItem("quit");
 		mntmQuit.addActionListener(new ActionListener() {
