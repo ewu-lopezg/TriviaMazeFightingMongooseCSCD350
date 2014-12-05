@@ -20,33 +20,33 @@ public class Database
 	private static ArrayList usedQuestionId = new ArrayList();
 
 	
-	public static void main (String args[])
-	{
+	//public static void main (String args[])
+	//{
 		//if not exist 
 		//when creating, deleting, inserting 
 		//Insertion: check if username already exists 
 		//if database dropped than SELECT cannot print
 		// "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
         // "VALUES (" + command[1] +"," + command[2] + ", " + command[3] + ", "+ ", NULL, NULL);";
-			openTable();
-			createTable();
+			//openTable();
+			//createTable();
 			//insertOperation();
-			String[] s = new String[4];
-			s[1] = "glopez";
-			s[2] = "2000";
-			s[3] = "0"; 
-			insertToUserTable(s);
+			//String[] s = new String[4];
+			//s[1] = "glopez";
+			//s[2] = "2000";
+			//s[3] = "0"; 
+			//insertToUserTable(s);
 			//updateOperation();
 			//deleteOperation();			
 			//selectOperation();
 			//dropTable("user");
 			//dropTable("question");
-			selectOperation();
+			//selectOperation();
 			//selectOperationQuestions();
 			//String[] s = getQuestion();
 			//Print(s);
-			close();
-	}
+			//close();
+	//}
 	public static void Print(String[] s)
 	{
 		for(int index = 0; index < s.length; index++)

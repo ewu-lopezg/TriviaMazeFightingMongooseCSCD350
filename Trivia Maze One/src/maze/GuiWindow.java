@@ -39,6 +39,7 @@ public class GuiWindow {
 	private Maze maze;
 	private mapPanel map;
 	private LoginScreen login = new LoginScreen();
+	private EditDatabase editdata = new EditDatabase();
 
 	/**
 	 * Launch the application.
@@ -73,8 +74,8 @@ public class GuiWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][][][][][][][][][][][][][][]", "[grow][][][][][][][][][]"));
 		
-		//mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
-		//map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
+		mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
+		map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
 //		map = new JPanel();                                                              // for this one
 		map.setBackground(Color.GRAY);
 		frame.getContentPane().add(map, "cell 0 0 16 10,grow");
@@ -208,6 +209,7 @@ public class GuiWindow {
 		JMenuItem mntmDatabase = new JMenuItem("database");
 		mntmDatabase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { //--------------------edit database
+				editdata.setVisible(true);
 			}
 		});
 		mnEdit.add(mntmDatabase);

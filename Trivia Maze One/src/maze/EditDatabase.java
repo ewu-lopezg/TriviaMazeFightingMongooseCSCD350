@@ -45,6 +45,8 @@ public class EditDatabase extends JFrame {
 	private JTextField poss2TextField;
 	private JTextField poss3TextField;
 	private JTextField idTextField;
+	private JCheckBox chckbxMultipleChoice;
+	private JCheckBox chckbxTruefalse;
 	/**
 	 * Launch the application.
 	 */
@@ -103,6 +105,11 @@ public class EditDatabase extends JFrame {
 		AdminMain.add(rdbtnQuestions);
 		
 		JButton AddBtn = new JButton("ADD");
+		AddBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(contentPane, "name_25930192889649");
+			}
+		});
 		AddBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		AddBtn.setBounds(75, 110, 158, 68);
 		AdminMain.add(AddBtn);
@@ -141,6 +148,7 @@ public class EditDatabase extends JFrame {
 		add.add(lblQuestion);
 		
 		questionTextField = new JTextField();
+		questionTextField.setEnabled(false);
 		questionTextField.setBounds(76, 84, 470, 22);
 		add.add(questionTextField);
 		questionTextField.setColumns(10);
@@ -150,6 +158,7 @@ public class EditDatabase extends JFrame {
 		add.add(lblAnswer);
 		
 		answerTextField = new JTextField();
+		answerTextField.setEnabled(false);
 		answerTextField.setBounds(76, 119, 470, 22);
 		add.add(answerTextField);
 		answerTextField.setColumns(10);
@@ -159,6 +168,7 @@ public class EditDatabase extends JFrame {
 		add.add(lblPossible);
 		
 		poss1TextField = new JTextField();
+		poss1TextField.setEnabled(false);
 		poss1TextField.setBounds(76, 154, 470, 22);
 		add.add(poss1TextField);
 		poss1TextField.setColumns(10);
@@ -172,32 +182,97 @@ public class EditDatabase extends JFrame {
 		add.add(lblC);
 		
 		poss2TextField = new JTextField();
+		poss2TextField.setEnabled(false);
 		poss2TextField.setBounds(76, 179, 470, 22);
 		add.add(poss2TextField);
 		poss2TextField.setColumns(10);
 		
 		poss3TextField = new JTextField();
+		poss3TextField.setEnabled(false);
 		poss3TextField.setBounds(76, 208, 470, 22);
 		add.add(poss3TextField);
 		poss3TextField.setColumns(10);
 		
-		JCheckBox chckbxMultipleChoice = new JCheckBox("Multiple Choice ");
+		JLabel statusText = new JLabel("");
+		statusText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		statusText.setForeground(Color.RED);
+		statusText.setBounds(12, 240, 534, 58);
+		add.add(statusText);
+		
+		chckbxMultipleChoice = new JCheckBox("Multiple Choice ");
+		chckbxMultipleChoice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxMultipleChoice.isSelected())
+				{
+					questionTextField.setEnabled(true);
+					answerTextField.setEnabled(true);
+					poss1TextField.setEnabled(true);
+					poss2TextField.setEnabled(true);
+					poss3TextField.setEnabled(true);
+					statusText.setText("Multiple selected");
+					chckbxTruefalse.setSelected(false);
+				}
+			}
+		});
 		chckbxMultipleChoice.setBounds(70, 23, 115, 50);
 		add.add(chckbxMultipleChoice);
 		
-		JCheckBox chckbxTruefalse = new JCheckBox("True/False");
+		chckbxTruefalse = new JCheckBox("True/False");
+		chckbxTruefalse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxTruefalse.isSelected())
+				{
+					questionTextField.setEnabled(true);
+					answerTextField.setEnabled(true);
+					poss1TextField.setEnabled(true);
+					poss2TextField.setEnabled(true);
+					statusText.setText("True false selected");
+					chckbxMultipleChoice.setSelected(false);
+				}
+			}
+		});
 		chckbxTruefalse.setBounds(204, 23, 200, 50);
 		add.add(chckbxTruefalse);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxMultipleChoice.isSelected())//if multiple choice 
+				{
+					if(!(questionTextField.getText().compareTo("") == 0) && 
+							!(answerTextField.getText().compareTo("") == 0) &&
+							!(poss1TextField.getText().compareTo("") == 0) &&
+							!(poss2TextField.getText().compareTo("") == 0) &&
+							!(poss3TextField.getText().compareTo("") == 0))
+					{
+						JOptionPane.showMessageDialog(null, "Great all completed");
+						cl.show(contentPane, "name_25921842956592");
+					}
+					else{
+						JOptionPane.showMessageDialog(null,"Please make sure all fields are filled out");
+					}
+				}
+				else if(chckbxTruefalse.isSelected())//if true / false
+				{
+					if(!(questionTextField.getText().compareTo("") == 0) && 
+							!(answerTextField.getText().compareTo("") == 0) &&
+							!(poss1TextField.getText().compareTo("") == 0) &&
+							!(poss2TextField.getText().compareTo("") == 0))
+					{
+						JOptionPane.showMessageDialog(null, "Great all completed");
+						cl.show(contentPane, "name_25921842956592");
+					}
+					else{
+						JOptionPane.showMessageDialog(null,"Please make sure all fields are filled out");
+					}
+				}
+				else{
+					
+				}
+			}
+		});
 		btnSubmit.setBounds(447, 306, 99, 25);
 		add.add(btnSubmit);
-		
-		JLabel lblD = new JLabel("");
-		lblD.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblD.setForeground(Color.RED);
-		lblD.setBounds(12, 240, 534, 58);
-		add.add(lblD);
 		
 		delete = new JPanel();
 		contentPane.add(delete, "name_26062747484153");
