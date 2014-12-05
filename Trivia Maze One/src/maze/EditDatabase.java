@@ -106,7 +106,15 @@ public class EditDatabase extends JFrame {
 		
 		JButton AddBtn = new JButton("ADD");
 		AddBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				questionTextField.setText("");
+				answerTextField.setText("");
+				poss1TextField.setText("");
+				poss2TextField.setText("");
+				poss3TextField.setText("");
+				chckbxMultipleChoice.setSelected(false);
+				chckbxTruefalse.setSelected(false);
 				cl.show(contentPane, "name_25930192889649");
 			}
 		});
