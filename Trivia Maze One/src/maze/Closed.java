@@ -22,7 +22,14 @@ public class Closed implements I_Status
 
 	private boolean ask()
 	{
-		question = new QuestionTrueFalse("true", "taters gonna tate");
+//		Database.Print(s);
+		String[] temp = Database.getQuestion();
+		if(temp[4].equals("E"))
+			question = new QuestionTrueFalse(temp[1], temp[0]);
+		else
+			question = new QuestionMultiChoice(temp[1],temp[0],temp[2],temp[3],temp[4]);
+
+//		tf(answer, question)
 //		question = new QuestionMultiChoice("ma ha ha ha","best way to fight a titan","go for the eyes","ma ha ha ha","die" );
 		
 		Object[] possibleValues = question.getPossible();

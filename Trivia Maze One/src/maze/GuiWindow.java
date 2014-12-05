@@ -76,8 +76,8 @@ public class GuiWindow {
 		
 		mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
 		map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
-//		map = new JPanel();                                                              // for this one
-		map.setBackground(Color.GRAY);
+
+//		map.setBackground(Color.GRAY);
 		frame.getContentPane().add(map, "cell 0 0 16 10,grow");
 		
 		JButton btnUp = new JButton("up");
@@ -129,10 +129,16 @@ public class GuiWindow {
 				frame.repaint();
 				
 				if(maze.won())
+				{
 					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+					System.exit(0);
+				}
 				
 				if(!maze.isWinnable())
+				{
 					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
+					System.exit(0);
+				}
 			}
 		});
 		frame.getContentPane().add(btnNewButton_1, "cell 16 8,grow");
@@ -198,7 +204,9 @@ public class GuiWindow {
 		
 		JMenuItem mntmQuit = new JMenuItem("quit");
 		mntmQuit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { //-------------------quit
+			public void actionPerformed(ActionEvent e) 
+			{
+				System.exit(0);//-------------------quit
 			}
 		});
 		mnFile.add(mntmQuit);
