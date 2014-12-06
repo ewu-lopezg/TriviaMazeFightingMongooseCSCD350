@@ -39,7 +39,9 @@ public class GuiWindow {
 	private Maze maze;
 	private mapPanel map;
 	private LoginScreen login = new LoginScreen();
+	private userChoice choice = new userChoice();
 	private EditDatabase editdata = new EditDatabase();
+	
 
 	/**
 	 * Launch the application.
@@ -77,7 +79,6 @@ public class GuiWindow {
 		mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
 		map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
 
-//		map.setBackground(Color.GRAY);
 		frame.getContentPane().add(map, "cell 0 0 16 10,grow");
 		
 		JButton btnUp = new JButton("up");
@@ -172,9 +173,9 @@ public class GuiWindow {
 		mntmNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  //-------------------------make a new game
 			{
-				login.reenterTextField.setEnabled(true);
-				login.reenterLabel.setEnabled(true);
-				login.setVisible(true);
+//				login.reenterTextField.setEnabled(true);
+//				login.reenterLabel.setEnabled(true);
+//				login.setVisible(true);
 				String [] p = new String[3];
 				maze = new Maze();
 				frame.getContentPane().remove(map);
@@ -187,13 +188,18 @@ public class GuiWindow {
 		
 		JMenuItem mntmSaveGame = new JMenuItem("save game");
 		mntmSaveGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {//-------------------------save game
+			public void actionPerformed(ActionEvent e) 
+			{//-------------------------save game
+				choice.setVisible(true);
 			}
 		});
 		
 		JMenuItem mntmLoadGame = new JMenuItem("load game");
 		mntmLoadGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { //----------------------load game
+			public void actionPerformed(ActionEvent e)
+			{ //----------------------load game
+//				choice.setVisible(true);
+				login = new LoginScreen();
 				login.reenterTextField.setEnabled(false);
 				login.reenterLabel.setEnabled(false);
 				login.setVisible(true);
