@@ -33,6 +33,10 @@ import javax.swing.JOptionPane;
 import java.awt.Canvas;
 import java.awt.Color;
 
+/**
+ * @author Patches
+ *
+ */
 public class GuiWindow {
 
 	private JFrame frame;

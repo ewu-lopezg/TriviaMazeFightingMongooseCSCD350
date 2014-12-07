@@ -1,5 +1,9 @@
 package maze;
 
+/**
+ * @author Patches
+ *
+ */
 public class QuestionMultiChoice implements I_Question
 {
 	private String answer;
@@ -8,6 +12,13 @@ public class QuestionMultiChoice implements I_Question
 	private String optionB;
 	private String optionC;
 	
+	/**
+	 * @param val
+	 * @param question
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public QuestionMultiChoice(String val, String question, String a, String b, String c)
 	{
 		this.answer = val;
@@ -18,6 +29,9 @@ public class QuestionMultiChoice implements I_Question
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see maze.I_Question#getPossible()
+	 */
 	@Override
 	public Object[] getPossible() 
 	{
@@ -25,18 +39,27 @@ public class QuestionMultiChoice implements I_Question
 		return possible;
 	}
 
+	/* (non-Javadoc)
+	 * @see maze.I_Question#getQuestion()
+	 */
 	@Override
 	public String getQuestion()
 	{
 		return this.question;
 	}
 
+	/* (non-Javadoc)
+	 * @see maze.I_Question#getType()
+	 */
 	@Override
 	public String getType() 
 	{
 		return "Multi Choice";
 	}
 
+	/* (non-Javadoc)
+	 * @see maze.I_Question#validate(java.lang.String)
+	 */
 	@Override
 	public boolean validate(String passed) 
 	{

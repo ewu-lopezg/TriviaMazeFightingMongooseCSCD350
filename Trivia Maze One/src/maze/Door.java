@@ -1,42 +1,57 @@
 package maze;
 
+/**
+ * @author Patches
+ *
+ */
 public class Door implements I_Path
 {
 	private I_Status status;
-//	Room one;
-//	Room two;
 	
+	/**
+	 * 
+	 */
 	public Door()
 	{
 		this.status = new Closed();
-		
-//		this.status = new Open();
 	}
+	/**
+	 * @param passed
+	 */
 	public Door(I_Status passed)
 	{
 		this.status = passed;
 	}
 	
-//	public void SetRooms(Room one, Room two)
-//	{
-		
-//	}
-	private void setStatus(I_Status newStatus) //----------
+
+	/**
+	 * @param newStatus
+	 */
+	private void setStatus(I_Status newStatus) //-------------------
 	{
 		this.status = newStatus;
 	}
 
+	/* (non-Javadoc)
+	 * @see maze.I_Path#isPassable()
+	 */
 	@Override
 	public boolean isPassable() 
 	{
 		return this.status.isPassable();
 	}
 	
+	/* (non-Javadoc)
+	 * @see maze.I_Path#visit()
+	 */
 	public String visit()
 	{
 		return this.status.visit();
 	}
 
+	/* (non-Javadoc)
+	 * @see maze.I_Path#move()
+	 */
 	@Override
 	public boolean move() 
 	{
@@ -48,12 +63,6 @@ public class Door implements I_Path
 		
 		return moved;
 		
-//		if(status.move())
-//		{
-//			System.out.println("move player");
-//		}
-//		else
-//			status = new Locked();
 	}
 
 }

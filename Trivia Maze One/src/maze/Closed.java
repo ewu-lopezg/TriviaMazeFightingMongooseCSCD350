@@ -4,10 +4,17 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+/**
+ * @author Patches
+ *
+ */
 public class Closed implements I_Status 
 {
 	private I_Question question;
 
+	/* (non-Javadoc)
+	 * @see maze.I_Status#move()
+	 */
 	@Override
 	public boolean move() 
 	{
@@ -15,11 +22,17 @@ public class Closed implements I_Status
 		return question;
 	}
 
+	/* (non-Javadoc)
+	 * @see maze.I_Status#isPassable()
+	 */
 	public boolean isPassable()
 	{
 		return true;
 	}
 
+	/**
+	 * @return
+	 */
 	private boolean ask()
 	{
 //		Database.Print(s);
@@ -44,19 +57,18 @@ public class Closed implements I_Status
 		return question.validate(selectedValue);
 	}
 
+	/* (non-Javadoc)
+	 * @see maze.I_Status#hasQuestion()
+	 */
 	@Override
 	public boolean hasQuestion()
 	{
 		return true;
 	}
-
-	@Override
-	public String[] getQuestion() 
-	{
-		
-		return null;
-	}
 	
+	/* (non-Javadoc)
+	 * @see maze.I_Status#visit()
+	 */
 	public String visit()
 	{
 		return "c ";

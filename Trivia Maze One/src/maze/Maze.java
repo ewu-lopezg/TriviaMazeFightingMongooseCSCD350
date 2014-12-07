@@ -2,15 +2,20 @@ package maze;
 import java.io.*;
 import java.util.*;
 
+/**
+ * @author Patches
+ *
+ */
 public class Maze 
 {
 	private Player one;
-//	private Location start;
-//	private Location end;
 	private Room[][] map;
 	private int sizeRow;
 	private int sizeCol;
 	
+	/**
+	 * @param passed
+	 */
 	public Maze(String[]passed) //[r][c]
 	{
 		 try
@@ -23,7 +28,6 @@ public class Maze
 			 this.sizeCol = temp[1];
 			 
 			 temp = this.parseInts(passed[1]); //get start location
-			// this.start = new Location(temp[0],temp[1]); 
 			 this.one = new Player(new Location(temp[0],temp[1]), new Location(this.sizeCol-1,this.sizeRow -1));
 			 
 			 map =  new Room[sizeRow][sizeCol];
@@ -77,6 +81,10 @@ public class Maze
 		 }	 
 	}//end constructor
 	
+	/**
+	 * @param passed
+	 * @return
+	 */
 	private I_Path setPath(char passed)
 	{
 		I_Path temp;
@@ -93,6 +101,10 @@ public class Maze
 			return new Door(new Locked());
 	}//------------------------------------pull to factyory
 	
+	/**
+	 * @param passed
+	 * @return
+	 */
 	private int[] parseInts(String passed)
 	{
 		int[] ints = new int[2];
@@ -103,14 +115,12 @@ public class Maze
 		
 	}
 	
-//	public Location getEnd()
-//	{
-//		return this.end;
-//	}
-	
+	/**
+	 * 
+	 */
 	public Maze()
 	{
-		Location start = new Location(0,0);
+		Location start = new Location(0,0); //-------------------------
 		Location end = new Location(2,2);
 		this.sizeRow = 3;
 		this.sizeCol = 3;
@@ -160,16 +170,19 @@ public class Maze
 					
 			}
 		}
-		
-		this.visit(); //----------------------------------
-		//constructor
 	}//end constructor
 	
+	/**
+	 * @return
+	 */
 	public Player getPlayer()
 	{
 		return this.one;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String mazeString()
 	{
 		String map = "";
@@ -187,6 +200,9 @@ public class Maze
 	  return map;
 	}
 	
+	/**
+	 * 
+	 */
 	public void moveDown()
 	{
 		Location curr = one.getLocation();
@@ -201,6 +217,9 @@ public class Maze
 		}
 		
 	}
+	/**
+	 * 
+	 */
 	public void moveUp()
 	{
 		Location curr = one.getLocation();
@@ -209,6 +228,9 @@ public class Maze
 		if(moved)
 			one.move(new Location(curr.getX()-1, curr.getY()));
 	}
+	/**
+	 * 
+	 */
 	public void moveLeft()
 	{
 		Location curr = one.getLocation();
@@ -217,6 +239,9 @@ public class Maze
 		if(moved)
 			one.move(new Location(curr.getX(), curr.getY()-1));
 	}
+	/**
+	 * 
+	 */
 	public void moveRight()
 	{
 		Location curr = one.getLocation();
@@ -226,10 +251,12 @@ public class Maze
 			one.move(new Location(curr.getX(), curr.getY() +1));
 	}
 	
+	/**
+	 * @return
+	 */
 	public String visit()
 	{
 		String temp = "";
-//		System.out.println("rooms from left to right, top to bottom");
 		for(int col = 0; col < this.sizeCol; col++)
 		{
 			for(int row = 0; row < this.sizeRow; row++)
@@ -237,33 +264,48 @@ public class Maze
 				temp = temp + map[col][row].visit();
 			}
 		}
-//		System.out.println(temp);
 		return temp;
 	}
+	/**
+	 * @return
+	 */
 	public int getSizeRow()
 	{
 		return this.sizeRow;
 	}
 	
+	/**
+	 * @return
+	 */
 	public int getSizeCol()
 	{
 		return this.sizeCol;
 	}
 	
+	/**
+	 * @return
+	 */
 	public boolean won()
 	{
 		return this.one.won();
 	}
 	
+	/**
+	 * @return
+	 */
 	public boolean isWinnable()
 	{
 		ArrayList<Location> list = new ArrayList<Location>();
-		return isWinnable(one.getLocation(),list, one.getEnd());
-//		return isWinnable(map[one.getLocation().getX()][one.getLocation().getY()],list,map[one.getEnd().getX()][one.getEnd().getY()]);
-		
+		return isWinnable(one.getLocation(),list, one.getEnd());	
 	}
 	
 	
+	/**
+	 * @param curr
+	 * @param checked
+	 * @param target
+	 * @return
+	 */
 	private boolean isWinnable(Location curr, ArrayList<Location> checked, Location target)
 	{	
 				//base
