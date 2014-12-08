@@ -1,27 +1,27 @@
 package maze;
 
 /**
- * @author Patches
+ * @author Team: fighting mongoose
  *
  */
 public interface I_Question
 {
 	
 	/**
-	 * @return
+	 * @return gets an array of possible answers
 	 */
 	public Object[] getPossible();
 	/**
-	 * @return
+	 * @return String gets the actual question
 	 */
 	public String getQuestion();
 	/**
-	 * @return
+	 * @return String gets the type of question
 	 */
 	public String getType();
 	/**
-	 * @param passed
-	 * @return
+	 * @param passed the String that was guessed
+	 * @return boolean if the answer was right
 	 */
 	public boolean validate(String passed);
 	

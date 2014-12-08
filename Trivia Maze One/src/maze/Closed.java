@@ -5,7 +5,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
- * @author Patches
+ * @author Team: fighting mongoose
  *
  */
 public class Closed implements I_Status 

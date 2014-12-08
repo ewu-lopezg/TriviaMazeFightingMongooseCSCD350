@@ -1,7 +1,7 @@
 package maze;
 
 /**
- * @author Patches
+ * @author Team: fighting mongoose
  *
  */
 public class Wall implements I_Path

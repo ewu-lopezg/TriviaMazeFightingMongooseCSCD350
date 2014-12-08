@@ -1,25 +1,25 @@
 package maze;
 
 /**
- * @author Patches
+ * @author Team: fighting mongoose
  *
  */
 public interface I_Status 
 {
 	/**
-	 * @return
+	 * @return boolean if the player moved through
 	 */
 	public boolean move();
 	/**
-	 * @return
+	 * @return if the player is allowed to move
 	 */
 	public boolean isPassable();
 	/**
-	 * @return
+	 * @return boolean if the status has a question to unlock it
 	 */
 	public boolean hasQuestion();
 	/**
-	 * @return
+	 * @return the string representaion of the status
 	 */
 	public String visit();
 }

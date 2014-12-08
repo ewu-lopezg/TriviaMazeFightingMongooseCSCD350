@@ -1,7 +1,7 @@
 package maze;
 
 /**
- * @author Patches
+ * @author Team: fighting mongoose
  *
  */
 public class Location 
@@ -10,8 +10,8 @@ public class Location
 	private int y; //col
 	
 	/**
-	 * @param x
-	 * @param y
+	 * @param x the row
+	 * @param y the column
 	 */
 	public Location(int x, int y)
 	{
@@ -19,7 +19,7 @@ public class Location
 		this.y = y;
 	}
 	/**
-	 * @return
+	 * @return returns the x(row) value
 	 */
 	public int getX()
 	{
@@ -27,7 +27,7 @@ public class Location
 	}
 	
 	/**
-	 * @return
+	 * @return returns the y(column) value
 	 */
 	public int getY()
 	{

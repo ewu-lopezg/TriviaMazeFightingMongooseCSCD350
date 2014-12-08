@@ -1,21 +1,21 @@
 package maze;
 
 /**
- * @author Patches
+ * @author Team: fighting mongoose
  *
  */
 public interface I_Path 
 {
 	/**
-	 * @return
+	 * @return boolean if the path is passable
 	 */
 	boolean isPassable();
 	/**
-	 * @return
+	 * @return boolean if the player moved through the path
 	 */
 	boolean move();
 	/**
-	 * @return
+	 * @return String the string value of the path
 	 */
 	String visit();
 }

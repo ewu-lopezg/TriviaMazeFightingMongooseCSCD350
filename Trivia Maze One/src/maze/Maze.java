@@ -3,8 +3,9 @@ import java.io.*;
 import java.util.*;
 
 /**
- * @author Patches
- *
+ * @author Team: fighting mongoose
+ * this is the main class for the logic of the maze. it creates and manages all the other classes
+ * all manipulation of the maze should go through this class
  */
 public class Maze 
 {
@@ -14,7 +15,8 @@ public class Maze
 	private int sizeCol;
 	
 	/**
-	 * @param passed
+	 * @param passed - the string reprisentation of the diffrent patths in the class going clockwise
+	 * starting with the top of the room. it also goes from top left room to the right then down to the next row
 	 */
 	public Maze(String[]passed) //[r][c]
 	{
@@ -82,8 +84,8 @@ public class Maze
 	}//end constructor
 	
 	/**
-	 * @param passed
-	 * @return
+	 * @param passed the character representing the path. w for wall, o for open door, c for closed door, l for locked door. must be lowercase
+	 * @return the I_Path object that was set
 	 */
 	private I_Path setPath(char passed)
 	{
@@ -102,8 +104,8 @@ public class Maze
 	}//------------------------------------pull to factyory
 	
 	/**
-	 * @param passed
-	 * @return
+	 * @param passed a string with the integers represented as "x,y" 
+	 * @return an int[] represented as {x,y}
 	 */
 	private int[] parseInts(String passed)
 	{
@@ -116,7 +118,7 @@ public class Maze
 	}
 	
 	/**
-	 * 
+	 *  the generic maze constructor. it makes a 3x3 maze filled with closed doors and walls around the edges
 	 */
 	public Maze()
 	{
@@ -173,35 +175,16 @@ public class Maze
 	}//end constructor
 	
 	/**
-	 * @return
+	 * @return Payer the player object
 	 */
 	public Player getPlayer()
 	{
 		return this.one;
 	}
 	
-	/**
-	 * @return
-	 */
-	public String mazeString()
-	{
-		String map = "";
-		for(int i = 0; i < sizeCol; i++)
-		{
-			for(int j = 0; j < sizeRow; j++)
-			{
-				if(i == one.getLocation().getX() && j==one.getLocation().getY())
-					map = map + "X   ";
-				else
-					map = map + "o   ";
-			}
-			map = map + "\n"; 
-		}
-	  return map;
-	}
 	
 	/**
-	 * 
+	 * the method to move down depending on the path set for down in that room.
 	 */
 	public void moveDown()
 	{
@@ -218,7 +201,7 @@ public class Maze
 		
 	}
 	/**
-	 * 
+	 * the method to move up depending on the path set for up in that room.
 	 */
 	public void moveUp()
 	{
@@ -229,7 +212,7 @@ public class Maze
 			one.move(new Location(curr.getX()-1, curr.getY()));
 	}
 	/**
-	 * 
+	 * the method to move left depending on the path set for left in that room.
 	 */
 	public void moveLeft()
 	{
@@ -240,7 +223,7 @@ public class Maze
 			one.move(new Location(curr.getX(), curr.getY()-1));
 	}
 	/**
-	 * 
+	 * the method to move right depending on the path set for right in that room.
 	 */
 	public void moveRight()
 	{
@@ -252,7 +235,8 @@ public class Maze
 	}
 	
 	/**
-	 * @return
+	 * makes a string representation of the maze
+	 * @return String makes a string representation of the maze
 	 */
 	public String visit()
 	{
@@ -267,7 +251,7 @@ public class Maze
 		return temp;
 	}
 	/**
-	 * @return
+	 * @return int size of rows
 	 */
 	public int getSizeRow()
 	{
@@ -275,7 +259,7 @@ public class Maze
 	}
 	
 	/**
-	 * @return
+	 * @return int size of columns 
 	 */
 	public int getSizeCol()
 	{
@@ -283,7 +267,7 @@ public class Maze
 	}
 	
 	/**
-	 * @return
+	 * @return boolean if the player reached the end of the maze
 	 */
 	public boolean won()
 	{
@@ -291,7 +275,7 @@ public class Maze
 	}
 	
 	/**
-	 * @return
+	 * @return boolean checks if the player can win the game
 	 */
 	public boolean isWinnable()
 	{
@@ -301,10 +285,11 @@ public class Maze
 	
 	
 	/**
-	 * @param curr
-	 * @param checked
-	 * @param target
-	 * @return
+	 * Recursively check if the player can win the game
+	 * @param curr current location
+	 * @param checked list of visited rooms
+	 * @param target the end location
+	 * @return boolean if win-able
 	 */
 	private boolean isWinnable(Location curr, ArrayList<Location> checked, Location target)
 	{	

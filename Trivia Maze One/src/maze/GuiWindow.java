@@ -34,8 +34,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 
 /**
- * @author Patches
- *
+ * @author Team: fighting mongoose
+ * this is our main class that calls all the others
  */
 public class GuiWindow {
 
