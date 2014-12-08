@@ -41,9 +41,6 @@ public class Closed implements I_Status
 			question = new QuestionTrueFalse(temp[1], temp[0]);
 		else
 			question = new QuestionMultiChoice(temp[1],temp[0],temp[2],temp[3],temp[4]);
-
-//		tf(answer, question)
-//		question = new QuestionMultiChoice("ma ha ha ha","best way to fight a titan","go for the eyes","ma ha ha ha","die" );
 		
 		Object[] possibleValues = question.getPossible();
 		String selectedValue = (String) JOptionPane.showInputDialog(null,question.getQuestion(), question.getType(),
@@ -52,7 +49,10 @@ public class Closed implements I_Status
 		
 		//hit exit
 		if(selectedValue == null)
+		{
+			AudioPlayer.play("lock.wav");
 			return false;
+		}
 		
 		return question.validate(selectedValue);
 	}

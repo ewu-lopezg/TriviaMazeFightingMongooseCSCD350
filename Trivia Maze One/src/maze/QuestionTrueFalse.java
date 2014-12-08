@@ -49,8 +49,12 @@ public class QuestionTrueFalse implements I_Question
 	public boolean validate(String passed)
 	{
 		if(passed.compareToIgnoreCase(this.answer) ==0)
+		{
+			AudioPlayer.play("open.wav");
 			return true;
+		}
 		
+		AudioPlayer.play("lock.wav");
 		return false;	
 	}
 	

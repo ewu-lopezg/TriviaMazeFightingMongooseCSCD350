@@ -96,10 +96,17 @@ public class GuiWindow {
 				frame.repaint();
 				
 				if(maze.won())
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+				{
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
+				}
 				
 				if(!maze.isWinnable())
-					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
+				{
+					AudioPlayer.play("lose.wav");
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");
+					
+				}
 			}
 		});
 		frame.getContentPane().add(btnUp, "cell 16 6,grow");
@@ -115,10 +122,17 @@ public class GuiWindow {
 				frame.repaint();
 				
 				if(maze.won())
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+				{
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
+				}
 				
 				if(!maze.isWinnable())
-					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
+				{
+					AudioPlayer.play("lose.wav");
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");
+					
+				}
 			}
 		});
 		frame.getContentPane().add(btnNewButton, "cell 16 7,grow");
@@ -135,14 +149,15 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
-					System.exit(0);
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
 				}
 				
 				if(!maze.isWinnable())
 				{
-					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
-					System.exit(0);
+					AudioPlayer.play("lose.wav");
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");
+					
 				}
 			}
 		});
@@ -159,10 +174,16 @@ public class GuiWindow {
 				frame.repaint();
 				
 				if(maze.won())
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");//you win pannel
+				{
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
+				}
 				
 				if(!maze.isWinnable())
-					JOptionPane.showMessageDialog(frame, "You Lose!!!");//-not working
+				{
+					AudioPlayer.play("lose.wav");
+					JOptionPane.showMessageDialog(frame, "You Lose!!!");
+				}
 			}
 		});
 		frame.getContentPane().add(btnNewButton_2, "cell 16 9,grow");

@@ -64,7 +64,11 @@ public class QuestionMultiChoice implements I_Question
 	public boolean validate(String passed) 
 	{
 		if(this.answer.compareToIgnoreCase(passed)==0 )
+		{
+			AudioPlayer.play("open.wav");
 			return true;
+		}
+		AudioPlayer.play("lock.wav");
 		return false;
 	}
 
