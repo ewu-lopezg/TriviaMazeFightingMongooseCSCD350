@@ -186,7 +186,7 @@ public class Maze
 	/**
 	 * the method to move down depending on the path set for down in that room.
 	 */
-	public void moveDown()
+	public void moveDown() //add index out of bounds block
 	{
 		Location curr = one.getLocation();
 		Location next;
@@ -194,6 +194,7 @@ public class Maze
 		
 		if(moved)
 		{
+			AudioPlayer.play("walk.wav");
 			next = new Location(curr.getX()+1, curr.getY());
 			one.move(next);
 			
@@ -209,7 +210,10 @@ public class Maze
 		boolean moved = map[curr.getX()][curr.getY()].getUp().move();
 		
 		if(moved)
+		{
+			AudioPlayer.play("walk.wav");
 			one.move(new Location(curr.getX()-1, curr.getY()));
+		}
 	}
 	/**
 	 * the method to move left depending on the path set for left in that room.
@@ -220,7 +224,10 @@ public class Maze
 		boolean moved = map[curr.getX()][curr.getY()].getLeft().move();
 		
 		if(moved)
+		{
+			AudioPlayer.play("walk.wav");
 			one.move(new Location(curr.getX(), curr.getY()-1));
+		}
 	}
 	/**
 	 * the method to move right depending on the path set for right in that room.
@@ -231,7 +238,10 @@ public class Maze
 		boolean moved = map[curr.getX()][curr.getY()].getRight().move();
 		
 		if(moved)
+		{
+			AudioPlayer.play("walk.wav");
 			one.move(new Location(curr.getX(), curr.getY() +1));
+		}
 	}
 	
 	/**
