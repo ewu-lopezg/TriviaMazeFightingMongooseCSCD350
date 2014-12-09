@@ -98,8 +98,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					AudioPlayer.play("win.wav");
 					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
 				}
 				
 				if(!maze.isWinnable())
@@ -124,8 +124,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					AudioPlayer.play("win.wav");
 					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
 				}
 				
 				if(!maze.isWinnable())
@@ -150,8 +150,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					AudioPlayer.play("win.wav");
 					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
 				}
 				
 				if(!maze.isWinnable())
@@ -176,8 +176,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					AudioPlayer.play("win.wav");
 					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
+					AudioPlayer.play("win.wav");
 				}
 				
 				if(!maze.isWinnable())
@@ -192,17 +192,13 @@ public class GuiWindow {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnFile = new JMenu("file");
+		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		JMenuItem mntmNewGame = new JMenuItem("new game");
+		JMenuItem mntmNewGame = new JMenuItem("New Game");
 		mntmNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  //-------------------------make a new game
-			{
-				login.reenterPasswordTextField.setEnabled(true);
-				login.reenterLabel.setEnabled(true);
-				login.setVisible(true); 
-				
+			{				
 				String [] p = new String[3];
 				maze = new Maze();
 				frame.getContentPane().remove(map);
@@ -213,7 +209,7 @@ public class GuiWindow {
 		});
 		mnFile.add(mntmNewGame);
 		
-		JMenuItem mntmSaveGame = new JMenuItem("save game");
+		JMenuItem mntmSaveGame = new JMenuItem("Save Game");
 		mntmSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{//-------------------------save game
@@ -221,7 +217,7 @@ public class GuiWindow {
 			}
 		});
 		
-		JMenuItem mntmLoadGame = new JMenuItem("load game");
+		JMenuItem mntmLoadGame = new JMenuItem("Load Game");
 		mntmLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{ //----------------------load game
@@ -235,7 +231,7 @@ public class GuiWindow {
 		mnFile.add(mntmLoadGame);
 		mnFile.add(mntmSaveGame);
 		
-		JMenuItem mntmQuit = new JMenuItem("quit");
+		JMenuItem mntmQuit = new JMenuItem("Quit");
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -245,20 +241,24 @@ public class GuiWindow {
 		});
 		mnFile.add(mntmQuit);
 		
-		JMenu mnEdit = new JMenu("edit");
+		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
 		
 		JMenuItem mntmDatabase = new JMenuItem("database");
 		mntmDatabase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { //--------------------edit database
-				EditDatabase editdata = new EditDatabase();
-				editdata.database = data; ///fix
-				editdata.setVisible(true);
+				LoginScreen login = new LoginScreen();
+				login.isAdmin = true; 
+				login.setVisible(true); 
+				
+				//EditDatabase editdata = new EditDatabase();
+				//editdata.database = data; ///fix
+				//editdata.setVisible(true);
 			}
 		});
 		mnEdit.add(mntmDatabase);
 		
-		JMenu mnHelp = new JMenu("help");
+		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmAbout = new JMenuItem("about");

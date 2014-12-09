@@ -1,5 +1,7 @@
 /*
  /*
+ /*
+ /*
  * Trivia Maze Database 
  * @author Fighting Mongoose
  * @version 1.0z build Nov 9, 2014
@@ -18,7 +20,7 @@ public class Database
 	static Connection c = null;
 	private static Statement stmt = null;
 	private static String save = "";
-	private static ArrayList usedQuestionId = new ArrayList();
+	 static ArrayList usedQuestionId = new ArrayList();
 
 	
 	//public static void main (String args[])
@@ -146,8 +148,8 @@ public class Database
 	{		
 		try{
 			stmt = c.createStatement();
-			String sql = "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
-	                   "VALUES ('" + command[1] +"','" + command[2] + "'," + command[3] + ", NULL, NULL);";
+			String sql = "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION,USED) " +
+	                   "VALUES ('" + command[1] +"','" + command[2] + "'," + command[3] + ",'"+ command[4]+"','" + command[5]+"','"+ command[6]+"');";
 				stmt.executeUpdate(sql);
 				
 			stmt.close();
@@ -161,6 +163,35 @@ public class Database
 		JOptionPane.showMessageDialog(null, "Add New User Successful");
 		return true; 
 	}	
+	public static boolean hasAdminPrivileges(String username)
+	{
+		ResultSet result = null;
+		boolean isAdmin = false; 
+		boolean found = false; 
+		try{
+			stmt = c.createStatement();
+			result = stmt.executeQuery("SELECT username, admin FROM USER where USERNAME='" + username +"';");
+			
+			while(result.next() && !found)
+			{
+				String userName = result.getString("username");
+				boolean admin = result.getBoolean("admin");
+				if((userName.compareTo(username) == 0) && admin)
+				{
+					isAdmin = true; 
+					found = true; 
+				}
+			}
+			System.out.println("Select database successfully\n");
+			result.close();
+			
+			stmt.close();
+		}catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
+		}
+		return isAdmin; 
+	}
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Creates tables for USER and QUESTIONS in the maze database
@@ -173,7 +204,7 @@ public class Database
 			String sql = "CREATE TABLE IF NOT EXISTS USER" +
 	                   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 	                   "USERNAME VARCHAR(10) NOT NULL, " + 
-	                   "PASSWORD INT NOT NULL, " + 
+	                   "PASSWORD VARCHAR(30) NOT NULL, " + 
 	                   "ADMIN BOOLEAN NOT NULL, " +
 	                   "SAVE VARCHAR(74) , " +
 	                   "LOCATION VARCHAR(6), " +
@@ -310,7 +341,7 @@ public class Database
 //--------------------------------------------------------------------------------------------------------------------------
 	/*
 	 * Updates either USER or QUESTIONS table depending on the command[0]
-	 * @param String[] takes tablesName, updateColumnName, UpdateColumnNameValue, whereColumnName, whereColumnNameValue
+	 * @param String[] takes tablesName, updateColumnName, UpdateColumnNameValue, whereColumnNameValue
 	 * @returns boolean true if update successful, false if otherwise
 	 */
 	public static boolean updateOperation(String[] command)
@@ -318,14 +349,15 @@ public class Database
 		try
 		{
 			stmt = c.createStatement();
-			String sql = "UPDATE " + command[0] +" set "+ command[1] +"  = "+ command[2] +" where "+ command[3] +"= "+ command[4] +";";
+			String sql = "UPDATE " + command[0] +" set "+ command[1] +" = '"+ command[2] +"' where id="+ command[3] +";";
 			stmt.executeUpdate(sql);
 			c.commit();
 	        stmt.close();
-	       // c.close();
 		}catch ( Exception e )
 		 {
-		      return false; 
+			JOptionPane.showMessageDialog(null, e);
+			//JOptionPane.showMessageDialog(null, command[1] + " was not able to update to "+ command[2] +" Please make sure id number is correct");
+		     return false; 
 		 }
 		 return true; 
 	}
@@ -338,6 +370,11 @@ public class Database
 	 */
 	public static boolean deleteOperation(String tableName, String id)
 	{
+		if(Integer.parseInt(id) == 1 && tableName.compareTo("USER") == 0)
+		{
+			JOptionPane.showMessageDialog(null , "Cannot delete an admin account");
+			return false; 
+		}
 		try
 		{
 			stmt = c.createStatement();
@@ -453,6 +490,7 @@ public class Database
 		
 		public String[] getLoadedMap(String userName)
 		{
+			Maze maze = new Maze();
 			String [] profile = new String[4];
 			
 			ResultSet result = null;
@@ -472,8 +510,8 @@ public class Database
 					{
 						found = true; 
 						profile[0] = "4 4";
-						profile[1] = location; 
-						profile[2] = save; 
+						profile[1] = "0 0"; 
+						profile[2] = maze.visit(); 
 						profile[3] = "4 4";
 						loadUsedQuestion(used);
 					}
@@ -485,7 +523,7 @@ public class Database
 			 {
 				System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			}
-			return profile; 
+			return profile;   
 		}
 //--------------------------------------------------------------------------------------------------------------------------	
 		/*
@@ -520,8 +558,6 @@ public class Database
 				System.out.println("Select database successfully\n");
 				result.close();
 				stmt.close();
-				//c.close();
-			
 			}catch(Exception e)
 			 {
 				JOptionPane.showMessageDialog(null, e.getMessage());

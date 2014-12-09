@@ -15,6 +15,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
 
 public class userChoice extends JFrame {
 
@@ -40,9 +42,12 @@ public class userChoice extends JFrame {
 	 * Create the frame.
 	 */
 	public userChoice() {
+		setTitle("Save As ");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 257, 360);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
@@ -52,7 +57,10 @@ public class userChoice extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JButton btnNewButton = new JButton("new User");
+		JButton btnNewButton = new JButton("New User");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnNewButton.setForeground(Color.BLACK);
+		btnNewButton.setBackground(Color.GREEN);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -69,7 +77,9 @@ public class userChoice extends JFrame {
 		gbc_btnNewButton.gridy = 1;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("load user");
+		JButton btnNewButton_1 = new JButton("Load user");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnNewButton_1.setBackground(Color.GREEN);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -77,6 +87,7 @@ public class userChoice extends JFrame {
 				login = new LoginScreen();
 				login.reenterPasswordTextField.setEnabled(false);
 				login.reenterLabel.setEnabled(false);
+				login.isSave = true; 
 				login.setVisible(true);
 			}
 		});
@@ -88,10 +99,11 @@ public class userChoice extends JFrame {
 		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 		
 		JButton btnCancel = new JButton("cancel");
+		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnCancel.setBackground(Color.RED);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				//cancel
 				userChoice.this.dispose();
 			}
 		});
@@ -104,3 +116,4 @@ public class userChoice extends JFrame {
 	}
 
 }
+

@@ -13,7 +13,9 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JPasswordField;
+import java.awt.Color;
 
 
 public class LoginScreen extends JDialog {
@@ -21,8 +23,10 @@ public class LoginScreen extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernameTextField;
 	JLabel reenterLabel;
+	private Maze maze = new Maze();
 	private static Database database = new Database();
-	GuiWindow main;
+	boolean isAdmin = false;
+	boolean isSave = false; 
 	private JPasswordField passwordField2;
 	JPasswordField reenterPasswordTextField;
 
@@ -45,6 +49,7 @@ public class LoginScreen extends JDialog {
 	public LoginScreen() {
 		setBounds(100, 100, 441, 242);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.LIGHT_GRAY);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -76,13 +81,14 @@ public class LoginScreen extends JDialog {
 		contentPanel.add(reenterPasswordTextField);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(Color.LIGHT_GRAY);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("OK");  
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						String[] container = new String[4];
+						String[] container = new String[7];
 						String password =new String(passwordField2.getPassword());
 						String reenterPassword = new String(reenterPasswordTextField.getPassword());
 						
@@ -91,10 +97,43 @@ public class LoginScreen extends JDialog {
 							if(database.checkLogginCredentials(usernameTextField.getText(), password))
 							{
 								//lJOptionPane.showMessageDialog(null,"Congrats you logged in");
-								
-								container = database.getLoadedMap(usernameTextField.getText());
-								main.currentPlayerInfo = container; //--------------------Sets the arraylist with all saved questions 
-								LoginScreen.this.dispose();
+								if(isAdmin)
+								{
+									isAdmin = false; 
+									if(database.hasAdminPrivileges(usernameTextField.getText()))
+									{
+										EditDatabase editdata = new EditDatabase();
+										editdata.database = database; ///fix
+										editdata.setVisible(true);
+										LoginScreen.this.dispose();
+									}
+									else
+									{
+										JOptionPane.showMessageDialog(null, "You do not have access to this area");
+										passwordField2.setText("");
+										usernameTextField.setText("");
+										LoginScreen.this.dispose();
+									}
+								}
+								else if(isSave)
+								{
+									//Code for save to data base; 
+									isSave = false; 
+									container[1] = usernameTextField.getText(); 
+									//container[2] = password; 
+									//container[3] = "0";// admin
+									container[4] = maze.visit();//save
+									container[5] = Integer.toString(maze.getPlayer().getLocation().getX()) + " "+  Integer.toString(maze.getPlayer().getLocation().getY()); //location
+									container[6] = database.usedQuestionId.toString(); //used
+									
+								}
+								else
+								{								
+									GuiWindow mainWindow = new GuiWindow();
+									container = database.getLoadedMap(usernameTextField.getText());
+									mainWindow.currentPlayerInfo = container; //--------------------Sets the arraylist with all saved questions 
+									LoginScreen.this.dispose();
+								}
 							}
 							else{
 								JOptionPane.showMessageDialog(null, "Username does not match, Please try again");
@@ -111,9 +150,13 @@ public class LoginScreen extends JDialog {
 							{//if there is a username and pw
 								container[1] = usernameTextField.getText(); 
 								container[2] = password; 
-								container[3] = "0";
+								container[3] = "0";// admin
+								container[4] = maze.visit();//save
+								container[5] = Integer.toString(maze.getPlayer().getLocation().getX()) + " "+  Integer.toString(maze.getPlayer().getLocation().getY()); //location
+								container[6] = database.usedQuestionId.toString(); //used
 								if(database.insertToUserTable(container))//will throw error in database side if username already exist.								
 								{
+									//code for saving profile
 									LoginScreen.this.dispose();
 								}
 								passwordField2.setText("");
