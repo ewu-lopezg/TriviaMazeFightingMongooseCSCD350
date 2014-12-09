@@ -43,8 +43,9 @@ public class GuiWindow {
 	private Maze maze;
 	private mapPanel map;
 	private LoginScreen login = new LoginScreen();
+	String[] currentPlayerInfo;
+	private Database data; 
 	private userChoice choice = new userChoice();
-	private EditDatabase editdata = new EditDatabase();
 	
 
 	/**
@@ -80,8 +81,8 @@ public class GuiWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][][][][][][][][][][][][][][]", "[grow][][][][][][][][][]"));
 		
-		//mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
-		//map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
+		mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
+		map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
 
 		frame.getContentPane().add(map, "cell 0 0 16 10,grow");
 		
@@ -198,9 +199,10 @@ public class GuiWindow {
 		mntmNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  //-------------------------make a new game
 			{
-//				login.reenterTextField.setEnabled(true);
-//				login.reenterLabel.setEnabled(true);
-//				login.setVisible(true);
+				//login.reenterTextField.setEnabled(true);
+				login.reenterLabel.setEnabled(true);
+				login.setVisible(true); 
+				
 				String [] p = new String[3];
 				maze = new Maze();
 				frame.getContentPane().remove(map);
@@ -225,7 +227,7 @@ public class GuiWindow {
 			{ //----------------------load game
 //				choice.setVisible(true);
 				login = new LoginScreen();
-				login.reenterTextField.setEnabled(false);
+				//login.reenterTextField.setEnabled(false);//////////fix
 				login.reenterLabel.setEnabled(false);
 				login.setVisible(true);
 			}
@@ -237,6 +239,7 @@ public class GuiWindow {
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				data.close();
 				System.exit(0);//-------------------quit
 			}
 		});
@@ -248,6 +251,8 @@ public class GuiWindow {
 		JMenuItem mntmDatabase = new JMenuItem("database");
 		mntmDatabase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { //--------------------edit database
+				EditDatabase editdata = new EditDatabase();
+				editdata.database = data; ///fix
 				editdata.setVisible(true);
 			}
 		});
