@@ -38,6 +38,8 @@ import java.awt.Color;
  * this is our main class that calls all the others
  */
 public class GuiWindow {
+	
+	JMenuItem mntmQuit;
 
 	private JFrame frame;
 	Maze maze = new Maze();
@@ -78,8 +80,8 @@ public class GuiWindow {
 		//maze = new Maze();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 630, 405);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][][][][][][][][][][][][][][]", "[grow][][][][][][][][][]"));
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][][][][][][][][][][][][][][]", "[][grow][][][][][][][][][]"));
 		
 		mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
 		map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
@@ -110,7 +112,16 @@ public class GuiWindow {
 				}
 			}
 		});
-		frame.getContentPane().add(btnUp, "cell 16 6,grow");
+		
+		JButton btnQuit = new JButton("quit");
+		btnQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				mntmQuit.doClick();
+			}
+		});
+		frame.getContentPane().add(btnQuit, "cell 16 0,growx,aligny top");
+		frame.getContentPane().add(btnUp, "cell 16 7,grow");
 		
 		JButton btnNewButton = new JButton("right");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -135,7 +146,7 @@ public class GuiWindow {
 				}
 			}
 		});
-		frame.getContentPane().add(btnNewButton, "cell 16 7,grow");
+		frame.getContentPane().add(btnNewButton, "cell 16 8,grow");
 		
 		JButton btnNewButton_1 = new JButton("left");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -161,7 +172,7 @@ public class GuiWindow {
 				}
 			}
 		});
-		frame.getContentPane().add(btnNewButton_1, "cell 16 8,grow");
+		frame.getContentPane().add(btnNewButton_1, "cell 16 9,grow");
 		
 		JButton btnNewButton_2 = new JButton("down");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -186,7 +197,7 @@ public class GuiWindow {
 				}
 			}
 		});
-		frame.getContentPane().add(btnNewButton_2, "cell 16 9,grow");
+		frame.getContentPane().add(btnNewButton_2, "cell 16 10,grow");
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -231,7 +242,7 @@ public class GuiWindow {
 		mnFile.add(mntmLoadGame);
 		mnFile.add(mntmSaveGame);
 		
-		JMenuItem mntmQuit = new JMenuItem("Quit");
+		mntmQuit = new JMenuItem("Quit");
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -263,7 +274,10 @@ public class GuiWindow {
 		
 		JMenuItem mntmAbout = new JMenuItem("about");
 		mntmAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { //--------------------about
+			public void actionPerformed(ActionEvent e) 
+			{
+				about msg= new about();//--------------------about
+				msg.setVisible(true);
 			}
 		});
 		mnHelp.add(mntmAbout);
