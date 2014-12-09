@@ -80,8 +80,8 @@ public class GuiWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][][][][][][][][][][][][][][]", "[grow][][][][][][][][][]"));
 		
-		mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
-		map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
+		//mapPanel map = new mapPanel();		                                             //------------- swap these 2 for edititng
+		//map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());  //
 
 		frame.getContentPane().add(map, "cell 0 0 16 10,grow");
 		

@@ -1,4 +1,5 @@
 /*
+ /*
  * Trivia Maze Database 
  * @author Fighting Mongoose
  * @version 1.0z build Nov 9, 2014
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class Database 
 {
-	private static Connection c = null;
+	static Connection c = null;
 	private static Statement stmt = null;
 	private static String save = "";
 	private static ArrayList usedQuestionId = new ArrayList();
@@ -40,7 +41,7 @@ public class Database
 			//deleteOperation();			
 			//selectOperation();
 			//dropTable("user");
-			//dropTable("question");
+			//dropTable("questions");
 			//selectOperation();
 			//selectOperationQuestions();
 			//String[] s = getQuestion();
@@ -63,7 +64,7 @@ public class Database
 	public Database()
 	{
 		openTable();
-		createTable();
+		createTable();		
 	}
 	public boolean Database(String[] command)
 	{
@@ -81,6 +82,22 @@ public class Database
 	 * Opens maze database 
 	 * @returns boolean true if opens database successfully, false if otherwise 
 	 */
+	
+	/*
+	 * Opens maze database
+	 
+	public Connection dbConnection() {
+		try{
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:maze.db");
+			c.setAutoCommit(false);
+			return c; 
+		}catch(Exception e)
+		{
+			return null; 
+		}
+		
+	}*/
 	public static boolean openTable()
 	{
 		try{
@@ -104,16 +121,19 @@ public class Database
 	{		
 		try{
 			stmt = c.createStatement();
-			String sql = "INSERT INTO QUESTIONS (QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE) " +
-	                   "VALUES (" + command[1] +"," + command[2] + ", " + command[3] + ", " + command[4] +", " + command[5] +", " + command[6] +");";
+			String sql = "INSERT INTO QUESTIONS (QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE,USED) " +
+	                   "VALUES ('" + command[0] +"','" + command[1] + "', '" + command[2] + "', '" + command[3] +"', '" + command[4] +"', " + command[5] + "," + command[6]+");";
 				stmt.executeUpdate(sql);
 				
 			stmt.close();
 			c.commit();
+			//c.close();
 		}catch(Exception e)
 		 {
+			JOptionPane.showMessageDialog(null, e);
 			return false; 
 		}
+		JOptionPane.showMessageDialog(null, "Question insertion Successful");
 		return true; 
 	}
 //--------------------------------------------------------------------------------------------------------------------------
@@ -132,11 +152,13 @@ public class Database
 				
 			stmt.close();
 			c.commit();
+			//c.close();
 		}catch(Exception e)
 		 {
 			JOptionPane.showMessageDialog(null,"Username Already Exist, Please try again.");
 			return false; 
 		}
+		JOptionPane.showMessageDialog(null, "Add New User Successful");
 		return true; 
 	}	
 //--------------------------------------------------------------------------------------------------------------------------
@@ -155,6 +177,7 @@ public class Database
 	                   "ADMIN BOOLEAN NOT NULL, " +
 	                   "SAVE VARCHAR(74) , " +
 	                   "LOCATION VARCHAR(6), " +
+	                   "USED VARCHAR(34), " +
 	                   "UNIQUE(USERNAME));"; 
 			stmt.executeUpdate(sql);
 			
@@ -166,10 +189,11 @@ public class Database
 	                   "POSSIBLE2 VARCHAR(255) NOT NULL, " +
 	                   "POSSIBLE3 VARCHAR(255) NOT NULL, " + 
 	                   "TRUEFALSE BOOLEAN NOT NULL, " +
-	                   "USED VARCHAR(34) NOT NULL);";
+	                   "USED BOOLEAN NOT NULL);";
 			stmt.executeUpdate(sql);
 	
 			stmt.close();
+			//c.close();
 		}catch(Exception e)
 		 {
 			JOptionPane.showMessageDialog(null, "Something went wrong");
@@ -192,10 +216,11 @@ public class Database
 			{
 				int id = result.getInt("id");
 				String username = result.getString("username");
-				int password  = result.getInt("password");
+				String password  = result.getString("password");
 				boolean admin = result.getBoolean("admin");
 				String save = result.getString("save");
 				String location = result.getString("location");
+				String used = result.getString("used");
 				
 				System.out.println();
 				System.out.println("ID = " + id);
@@ -204,11 +229,13 @@ public class Database
 				System.out.println("ADMIN " + admin);
 				System.out.println("SAVE = " + save);
 				System.out.println("LOCATION = " + location);
+				System.out.println("USED = " + used);
 			}
 			System.out.println("Select database successfully\n");
 			result.close();
 			
 			stmt.close();
+			//c.close();
 		}catch(Exception e)
 		 {
 			
@@ -234,7 +261,7 @@ public class Database
 				String poss2 = result.getString("possible2");
 				String poss3 = result.getString("possible3");
 				boolean truefalse = result.getBoolean("truefalse");
-				String used = result.getString("used");
+				boolean used = result.getBoolean("used");
 				
 				System.out.println();
 				System.out.println("ID = " + id);
@@ -250,6 +277,7 @@ public class Database
 			result.close();
 			
 			stmt.close();
+			//c.close();
 		}catch(Exception e)
 		 {
 			
@@ -258,20 +286,21 @@ public class Database
 		return result;
 	}
 //--------------------------------------------------------------------------------------------------------------------------
-	private static void insertOperation()
+	private static void insertOperation()//false = 0, true = 1; 
 	{
 		try{
 			stmt = c.createStatement();
-			String sql = "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION) " +
-	                   "VALUES ('glopez227777','2000', 0, NULL, NULL);";
+			String sql = "INSERT INTO USER (USERNAME,PASSWORD,ADMIN,SAVE,LOCATION,USED) " +
+	                   "VALUES ('admin','admin', 1, NULL, NULL,'4 5 8');";
 				stmt.executeUpdate(sql);
 				
 			sql = "INSERT INTO QUESTIONS (QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE, USED) " +
-		                  "VALUES ('From what city are the EWU','Cheney', 'Spokane', 'Medical Lake', 'Airway Heights', 1, '12 22');";
+		                  "VALUES ('From what city are the EWU','Cheney', 'Spokane', 'Medical Lake', 'Airway Heights', 1, 0);";
 				stmt.executeUpdate(sql);
 				
 			stmt.close();
 			c.commit();
+			
 		}catch(Exception e)
 		 {
 			JOptionPane.showMessageDialog(null, "Data already exist");	
@@ -293,6 +322,7 @@ public class Database
 			stmt.executeUpdate(sql);
 			c.commit();
 	        stmt.close();
+	       // c.close();
 		}catch ( Exception e )
 		 {
 		      return false; 
@@ -311,15 +341,18 @@ public class Database
 		try
 		{
 			stmt = c.createStatement();
-		    String sql = "DELETE from " + tableName +" where ID="+ id +";";
+		    String sql = "DELETE FROM " + tableName +" WHERE id = "+ id +";";
 		    
 		    stmt.executeUpdate(sql);
 		    c.commit();
 		    stmt.close();
+		    //c.close();
 		}catch ( Exception e )
 		 {
+		      JOptionPane.showMessageDialog(null, "Please enter a valid ID");
 		      return false; 
 		 }
+		 JOptionPane.showMessageDialog(null, "Deletion Successful");
 		 return true; 
 	}
 //--------------------------------------------------------------------------------------------------------------------------
@@ -395,7 +428,7 @@ public class Database
 			System.out.println("Select database successfully\n");
 			result.close();
 			stmt.close();
-		
+			//c.close();
 		}catch(Exception e)
 		 {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -417,28 +450,56 @@ public class Database
 		 return true;
 	}
 //--------------------------------------------------------------------------------------------------------------------------
-		/*
-		 * Opens maze database
-		 */
-		public Connection dbConnection() {
-			try{
-				Class.forName("org.sqlite.JDBC");
-				c = DriverManager.getConnection("jdbc:sqlite:maze.db");
-				c.setAutoCommit(false);
-				return c; 
-			}catch(Exception e)
-			{
-				return null; 
-			}
-			
-		}
 		
-		public String[] getLoadedMap()
+		public String[] getLoadedMap(String userName)
 		{
-			//if save null load of default(admin)
-			//else load of save
-			//return array size, location, save
-			return null; 
+			String [] profile = new String[4];
+			
+			ResultSet result = null;
+			try{
+				stmt = c.createStatement();
+				result = stmt.executeQuery("SELECT * FROM USER;");
+				boolean found = false; 
+				
+				while(result.next() && !found)
+				{
+					String username = result.getString("username");
+					String save = result.getString("save");
+					String location = result.getString("location");
+					String used = result.getString("used");
+					
+					if(username.compareTo(userName) == 0)
+					{
+						found = true; 
+						profile[0] = "4 4";
+						profile[1] = location; 
+						profile[2] = save; 
+						profile[3] = "4 4";
+						loadUsedQuestion(used);
+					}
+				}
+				result.close();
+				stmt.close();
+				
+			}catch(Exception e)
+			 {
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			}
+			return profile; 
+		}
+//--------------------------------------------------------------------------------------------------------------------------	
+		/*
+		 * Loads saved questions from user profile
+		 */
+		public void loadUsedQuestion(String usedQuestions)
+		{
+			usedQuestionId.clear();//clearing out array 
+			
+	        String[] storing = usedQuestions.split(" ");
+			for(String used : storing)
+			{
+					usedQuestionId.add(used);
+			}
 		}
 //--------------------------------------------------------------------------------------------------------------------------
 				
@@ -459,6 +520,7 @@ public class Database
 				System.out.println("Select database successfully\n");
 				result.close();
 				stmt.close();
+				//c.close();
 			
 			}catch(Exception e)
 			 {
@@ -468,6 +530,3 @@ public class Database
 		}
 
 }
-
-
-

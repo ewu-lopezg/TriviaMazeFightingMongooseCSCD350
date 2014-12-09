@@ -34,9 +34,8 @@ public class EditDatabase extends JFrame {
 	private JPanel delete; 
 	private JPanel AdminMain; 
 	private JTable table;
-	private static Database database = new Database();
+	static Database database;
 	CardLayout cl = new CardLayout(0,0);
-	private static Connection connection = null;
 	ResultSet rs = null; 
 	PreparedStatement pst = null; 
 	private JTextField questionTextField;
@@ -47,6 +46,12 @@ public class EditDatabase extends JFrame {
 	private JTextField idTextField;
 	private JCheckBox chckbxMultipleChoice;
 	private JCheckBox chckbxTruefalse;
+	private JLabel warningLable;
+	private JRadioButton rdbtnUsers;
+	private JRadioButton rdbtnQuestions;
+	boolean question = false; 
+	static JButton refreshBtn;
+	private JTable updateTable;
 	/**
 	 * Launch the application.
 	 */
@@ -56,7 +61,6 @@ public class EditDatabase extends JFrame {
 				try {
 					EditDatabase frame = new EditDatabase();
 					frame.setVisible(true);
-					connection = database.dbConnection();
 				} catch (Exception e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e);
@@ -64,17 +68,50 @@ public class EditDatabase extends JFrame {
 			}
 		});
 	}
-	private void UpdateTable()
+	public void loadTable(String tableName)
 	{
-		
+		try{
+			String query = "SELECT * FROM " + tableName + ";";
+			
+			pst = database.c.prepareStatement(query);
+			rs = pst.executeQuery();
+			table.setModel(DbUtils.resultSetToTableModel(rs));	
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, e);
+		}
 	}
+	
+	public boolean isUserSelected()
+	{
+		if(rdbtnUsers.isSelected())
+		{
+			return true; 
+		}
+		return false; 
+	}
+	public boolean isQuestionSelected()
+	{
+		if(rdbtnQuestions.isSelected())
+		{
+			return true; 
+		}
+		return false; 
+	}
+	
+	public void setAdminDefault()
+	{
+		rdbtnQuestions.setSelected(false);
+		rdbtnUsers.setSelected(false); 
+	}
+
 	/**
 	 * Create the frame.
 	 */
 	public EditDatabase() {
-		//connection = database.dbConnection();
+		setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 576, 386);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,12 +131,22 @@ public class EditDatabase extends JFrame {
 		lblTables.setBounds(104, 52, 69, 16);
 		AdminMain.add(lblTables);
 		
-		JRadioButton rdbtnUsers = new JRadioButton("Users");
+		rdbtnUsers = new JRadioButton("Users");
+		rdbtnUsers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnQuestions.setSelected(false);
+			}
+		});
 		rdbtnUsers.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		rdbtnUsers.setBounds(196, 48, 95, 25);
 		AdminMain.add(rdbtnUsers);
 		
-		JRadioButton rdbtnQuestions = new JRadioButton("Questions");
+		rdbtnQuestions = new JRadioButton("Questions");
+		rdbtnQuestions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rdbtnUsers.setSelected(false);				
+			}
+		});
 		rdbtnQuestions.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		rdbtnQuestions.setBounds(295, 48, 123, 25);
 		AdminMain.add(rdbtnQuestions);
@@ -108,14 +155,26 @@ public class EditDatabase extends JFrame {
 		AddBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				questionTextField.setText("");
-				answerTextField.setText("");
-				poss1TextField.setText("");
-				poss2TextField.setText("");
-				poss3TextField.setText("");
-				chckbxMultipleChoice.setSelected(false);
-				chckbxTruefalse.setSelected(false);
-				cl.show(contentPane, "name_25930192889649");
+				if(isQuestionSelected())
+				{
+					warningLable.setText("Please select a Table");
+					questionTextField.setText("");
+					answerTextField.setText("");
+					poss1TextField.setText("");
+					poss2TextField.setText("");
+					poss3TextField.setText("");
+					chckbxMultipleChoice.setSelected(false);
+					chckbxTruefalse.setSelected(false);
+					cl.show(contentPane, "name_25930192889649");
+				}
+				else if(isUserSelected())
+				{
+					JOptionPane.showMessageDialog(null, "User selected");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please select a table");
+				}				
 			}
 		});
 		AddBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -123,6 +182,22 @@ public class EditDatabase extends JFrame {
 		AdminMain.add(AddBtn);
 		
 		JButton updateBtn = new JButton("UPDATE");
+		updateBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(isQuestionSelected())
+				{
+					cl.show(contentPane, "name_25930192889649");
+				}
+				else if(isUserSelected())
+				{
+					JOptionPane.showMessageDialog(null, "User selected");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please select a table");
+				}				
+			}
+		});
 		updateBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		updateBtn.setBounds(286, 110, 158, 68);
 		AdminMain.add(updateBtn);
@@ -130,8 +205,21 @@ public class EditDatabase extends JFrame {
 		JButton deleteBtn = new JButton("DELETE");
 		deleteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(contentPane, "name_26062747484153");
 				
+				if(isQuestionSelected())
+				{
+					question = true; 
+					cl.show(contentPane, "name_26062747484153");
+				}
+				else if(isUserSelected())
+				{
+					question = false; 
+					cl.show(contentPane, "name_26062747484153");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please select a table");
+				}
 			}
 		});
 		deleteBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -139,6 +227,12 @@ public class EditDatabase extends JFrame {
 		AdminMain.add(deleteBtn);
 		
 		JButton btnNewButton = new JButton("Cancel");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//database.close();////////////////////////////////////////////////remove when connect to others 
+				EditDatabase.this.dispose();
+			}
+		});
 		btnNewButton.setBounds(447, 306, 99, 25);
 		AdminMain.add(btnNewButton);
 		
@@ -212,6 +306,7 @@ public class EditDatabase extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(chckbxMultipleChoice.isSelected())
 				{
+					warningLable.setText("");
 					questionTextField.setEnabled(true);
 					answerTextField.setEnabled(true);
 					poss1TextField.setEnabled(true);
@@ -222,7 +317,7 @@ public class EditDatabase extends JFrame {
 				}
 			}
 		});
-		chckbxMultipleChoice.setBounds(70, 23, 115, 50);
+		chckbxMultipleChoice.setBounds(76, 31, 115, 39);
 		add.add(chckbxMultipleChoice);
 		
 		chckbxTruefalse = new JCheckBox("True/False");
@@ -230,10 +325,12 @@ public class EditDatabase extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxTruefalse.isSelected())
 				{
+					warningLable.setText("");
 					questionTextField.setEnabled(true);
 					answerTextField.setEnabled(true);
 					poss1TextField.setEnabled(true);
 					poss2TextField.setEnabled(true);
+					poss3TextField.setEnabled(false);
 					statusText.setText("True false selected");
 					chckbxMultipleChoice.setSelected(false);
 				}
@@ -244,6 +341,8 @@ public class EditDatabase extends JFrame {
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
+			//(QUESTION,ANSWER,POSSIBLE1,POSSIBLE2,POSSIBLE3,TRUEFALSE)
+			String[] container = new String[7];
 			public void actionPerformed(ActionEvent e) {
 				if(chckbxMultipleChoice.isSelected())//if multiple choice 
 				{
@@ -253,8 +352,21 @@ public class EditDatabase extends JFrame {
 							!(poss2TextField.getText().compareTo("") == 0) &&
 							!(poss3TextField.getText().compareTo("") == 0))
 					{
-						JOptionPane.showMessageDialog(null, "Great all completed");
-						cl.show(contentPane, "name_25921842956592");
+						container[0] = questionTextField.getText();
+						container[1] = answerTextField.getText();
+						container[2] = poss1TextField.getText();
+						container[3] = poss2TextField.getText();
+						container[4] = poss3TextField.getText();
+						container[5] = "0";
+						container[6] = "0";
+						if(database.insertToQuestionSTable(container))
+						{
+							setAdminDefault();
+							cl.show(contentPane, "name_25921842956592");
+						}
+						else{
+							statusText.setText("Something went wrong");
+						}
 					}
 					else{
 						JOptionPane.showMessageDialog(null,"Please make sure all fields are filled out");
@@ -267,8 +379,20 @@ public class EditDatabase extends JFrame {
 							!(poss1TextField.getText().compareTo("") == 0) &&
 							!(poss2TextField.getText().compareTo("") == 0))
 					{
-						JOptionPane.showMessageDialog(null, "Great all completed");
-						cl.show(contentPane, "name_25921842956592");
+						container[0] = questionTextField.getText();
+						container[1] = answerTextField.getText();
+						container[2] = poss1TextField.getText();
+						container[3] = poss2TextField.getText(); 
+						container[5] = "1";
+						container[6] = "0";
+						if(database.insertToQuestionSTable(container))
+						{
+							setAdminDefault();
+							cl.show(contentPane, "name_25921842956592");
+						}
+						else{
+							statusText.setText("Something went wrong");
+						}
 					}
 					else{
 						JOptionPane.showMessageDialog(null,"Please make sure all fields are filled out");
@@ -282,57 +406,119 @@ public class EditDatabase extends JFrame {
 		btnSubmit.setBounds(447, 306, 99, 25);
 		add.add(btnSubmit);
 		
+		warningLable = new JLabel("Please select a Table");
+		warningLable.setForeground(Color.RED);
+		warningLable.setBounds(80, 5, 213, 32);
+		add.add(warningLable);
+		
 		delete = new JPanel();
 		contentPane.add(delete, "name_26062747484153");
 		delete.setLayout(null);
 		delete.setVisible(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 13, 534, 193);
+		scrollPane.setBounds(12, 13, 534, 242);
 		delete.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		table.setVisible(true); 
 		
-		JButton refreshBtn = new JButton("Refresh");
+		refreshBtn = new JButton("Refresh");
 		refreshBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Database database = new Database();
-				try{
-					String query = "SELECT * FROM USER";
-					pst = connection.prepareStatement(query);
-					rs = pst.executeQuery();
-					table.setModel(DbUtils.resultSetToTableModel(rs));		
-				}catch(Exception e){
-					JOptionPane.showMessageDialog(null, e);
-				}
+			public void actionPerformed(ActionEvent arg0) 
+			{
 				
+			if(question)	
+			{
+				loadTable("QUESTIONS");
+			}
+			else
+			{
+				loadTable("USER");
+			}
 			}
 		});
-		refreshBtn.setBounds(12, 212, 99, 25);
+		refreshBtn.setBounds(12, 266, 99, 25);
 		delete.add(refreshBtn);
 		
 		JLabel lblId = new JLabel("ID # : ");
-		lblId.setBounds(256, 272, 43, 16);
+		lblId.setBounds(14, 314, 43, 16);
 		delete.add(lblId);
 		
 		idTextField = new JTextField();
-		idTextField.setBounds(298, 269, 55, 22);
+		idTextField.setBounds(56, 311, 55, 22);
 		delete.add(idTextField);
 		idTextField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Please enter the ID Number of the row you wish to delete. ");
+		lblNewLabel.setForeground(Color.RED);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setBounds(111, 219, 372, 34);
+		lblNewLabel.setBounds(118, 261, 372, 34);
 		delete.add(lblNewLabel);
 		
-		JPanel blah = new JPanel();
-		contentPane.add(blah, "name_7660034415643");
-		blah.setLayout(null);
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*if((table.getSelectedRow() < 0))
+				{
+					JOptionPane.showMessageDialog(null, "Please select a row");
+				}*/
+				setAdminDefault();
+				cl.show(contentPane, "name_25921842956592");
+			}
+		});
+		btnCancel.setBounds(447, 308, 99, 25);
+		delete.add(btnCancel);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(65, 164, 56, 16);
-		blah.add(lblNewLabel_1);
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!(idTextField.getText().compareTo("") == 0))
+				{
+					JOptionPane.showMessageDialog(null, "good to go");
+					if(question)
+					{
+						if(database.deleteOperation("QUESTIONS", idTextField.getText()))
+						{
+							idTextField.setText("");
+							refreshBtn.doClick();
+						}
+						else{
+							idTextField.setText("");
+						}
+					}
+					else{
+						if(database.deleteOperation("USER", idTextField.getText()))
+						{
+							idTextField.setText("");
+							refreshBtn.doClick();
+						}
+						else
+						{
+							idTextField.setText("");
+						}
+					}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please enter an id number");
+				}
+			}
+		});
+		btnDelete.setBounds(128, 310, 99, 25);
+		delete.add(btnDelete);
+		
+		JPanel update = new JPanel();
+		contentPane.add(update, "name_7660034415643");
+		update.setLayout(null);
+		
+		JButton btnCancel_1 = new JButton("Cancel");
+		btnCancel_1.setBounds(449, 308, 99, 25);
+		update.add(btnCancel_1);
+		
+		updateTable = new JTable();
+		updateTable.setBounds(12, 13, 536, 164);
+		update.add(updateTable);
 	}
 }
