@@ -199,7 +199,7 @@ public class GuiWindow {
 		mntmNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  //-------------------------make a new game
 			{
-				//login.reenterTextField.setEnabled(true);
+				login.reenterPasswordTextField.setEnabled(true);
 				login.reenterLabel.setEnabled(true);
 				login.setVisible(true); 
 				
@@ -227,7 +227,7 @@ public class GuiWindow {
 			{ //----------------------load game
 //				choice.setVisible(true);
 				login = new LoginScreen();
-				//login.reenterTextField.setEnabled(false);//////////fix
+				login.reenterPasswordTextField.setEnabled(false);//////////fix
 				login.reenterLabel.setEnabled(false);
 				login.setVisible(true);
 			}

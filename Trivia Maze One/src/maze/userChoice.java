@@ -58,7 +58,7 @@ public class userChoice extends JFrame {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				login = new LoginScreen();
-				//login.reenterTextField.setEnabled(true);
+				login.reenterPasswordTextField.setEnabled(true);
 				login.reenterLabel.setEnabled(true);
 				login.setVisible(true);
 			}
@@ -76,7 +76,7 @@ public class userChoice extends JFrame {
 			{
 				//load user ------------------------------
 				login = new LoginScreen();
-				//login.reenterTextField.setEnabled(false);
+				login.reenterPasswordTextField.setEnabled(false);
 				login.reenterLabel.setEnabled(false);
 				login.setVisible(true);
 			}
