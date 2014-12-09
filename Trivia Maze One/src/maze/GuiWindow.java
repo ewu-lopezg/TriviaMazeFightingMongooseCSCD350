@@ -98,8 +98,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 					AudioPlayer.play("win.wav");
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 				}
 				
 				if(!maze.isWinnable())
@@ -124,8 +124,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 					AudioPlayer.play("win.wav");
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 				}
 				
 				if(!maze.isWinnable())
@@ -150,8 +150,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 					AudioPlayer.play("win.wav");
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 				}
 				
 				if(!maze.isWinnable())
@@ -176,8 +176,8 @@ public class GuiWindow {
 				
 				if(maze.won())
 				{
-					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 					AudioPlayer.play("win.wav");
+					JOptionPane.showMessageDialog(frame, "Congragulations you won!!!");
 				}
 				
 				if(!maze.isWinnable())
