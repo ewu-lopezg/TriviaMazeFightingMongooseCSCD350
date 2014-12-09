@@ -23,7 +23,7 @@ public class LoginScreen extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernameTextField;
 	JLabel reenterLabel;
-	Maze maze = new Maze();
+	Maze maze;
 	private static Database database = new Database();
 	boolean isAdmin = false;
 	boolean isSave = false; 
