@@ -36,7 +36,6 @@ public class userChoice extends JFrame {
 			}
 		});
 	}
-
 	/**
 	 * Create the frame.
 	 */
