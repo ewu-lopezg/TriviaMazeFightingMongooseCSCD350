@@ -123,9 +123,9 @@ public class Maze
 	public Maze()
 	{
 		Location start = new Location(0,0); //-------------------------
-		Location end = new Location(2,2);
-		this.sizeRow = 3;
-		this.sizeCol = 3;
+		this.sizeRow = 4;
+		this.sizeCol = 4;
+		Location end = new Location(this.sizeRow-1,this.sizeCol-1);
 		one = new Player(start, end);
 		map =  new Room[sizeCol][sizeRow];
 		
