@@ -40,7 +40,7 @@ import java.awt.Color;
 public class GuiWindow {
 
 	private JFrame frame;
-	private Maze maze;
+	Maze maze = new Maze();
 	private mapPanel map;
 	private LoginScreen login = new LoginScreen();
 	String[] currentPlayerInfo;
@@ -75,7 +75,7 @@ public class GuiWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		maze = new Maze();
+		//maze = new Maze();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 630, 405);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,7 +132,6 @@ public class GuiWindow {
 				{
 					AudioPlayer.play("lose.wav");
 					JOptionPane.showMessageDialog(frame, "You Lose!!!");
-					
 				}
 			}
 		});
@@ -205,6 +204,7 @@ public class GuiWindow {
 				map.readMap(maze.getSizeCol(),maze.getSizeRow(),maze.visit(),maze.getPlayer());
 				frame.getContentPane().add(map, "cell 0 0 16 10,grow");
 				frame.repaint();
+				login.maze = new Maze();
 			}
 		});
 		mnFile.add(mntmNewGame);

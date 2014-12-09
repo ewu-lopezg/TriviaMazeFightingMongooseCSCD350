@@ -23,7 +23,7 @@ public class LoginScreen extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernameTextField;
 	JLabel reenterLabel;
-	private Maze maze = new Maze();
+	Maze maze = new Maze();
 	private static Database database = new Database();
 	boolean isAdmin = false;
 	boolean isSave = false; 
@@ -125,13 +125,14 @@ public class LoginScreen extends JDialog {
 									container[4] = maze.visit();//save
 									container[5] = Integer.toString(maze.getPlayer().getLocation().getX()) + " "+  Integer.toString(maze.getPlayer().getLocation().getY()); //location
 									container[6] = database.usedQuestionId.toString(); //used
-									
 								}
 								else
 								{								
 									GuiWindow mainWindow = new GuiWindow();
+									
 									container = database.getLoadedMap(usernameTextField.getText());
 									mainWindow.currentPlayerInfo = container; //--------------------Sets the arraylist with all saved questions 
+									maze = mainWindow.maze;
 									LoginScreen.this.dispose();
 								}
 							}
