@@ -13,16 +13,18 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 
 public class LoginScreen extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernameTextField;
-	private JTextField passwordTextField;
-	JTextField reenterTextField;
 	JLabel reenterLabel;
 	private static Database database = new Database();
+	GuiWindow main;
+	private JPasswordField passwordField2;
+	JPasswordField reenterPasswordTextField;
 
 	/**
 	 * Launch the application.
@@ -64,15 +66,14 @@ public class LoginScreen extends JDialog {
 		contentPanel.add(usernameTextField);
 		usernameTextField.setColumns(10);
 		
-		passwordTextField = new JTextField();
-		passwordTextField.setBounds(78, 103, 331, 22);
-		contentPanel.add(passwordTextField);
-		passwordTextField.setColumns(10);
+		passwordField2 = new JPasswordField();
+		passwordField2.setBounds(78, 106, 331, 22);
+		contentPanel.add(passwordField2);
 		
-		reenterTextField = new JTextField();
-		reenterTextField.setBounds(78, 130, 331, 22);
-		contentPanel.add(reenterTextField);
-		reenterTextField.setColumns(10);
+		reenterPasswordTextField = new JPasswordField();
+		reenterPasswordTextField.setEnabled(false);
+		reenterPasswordTextField.setBounds(77, 134, 333, 22);
+		contentPanel.add(reenterPasswordTextField);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -82,40 +83,46 @@ public class LoginScreen extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						String[] container = new String[4];
-						if(!reenterTextField.isEnabled())//Returned Users
+						String password =new String(passwordField2.getPassword());
+						String reenterPassword = new String(reenterPasswordTextField.getPassword());
+						
+						if(!reenterPasswordTextField.isEnabled())//Returned Users
 						{
-							if(database.checkLogginCredentials(usernameTextField.getText(), passwordTextField.getText()))
+							if(database.checkLogginCredentials(usernameTextField.getText(), password))
 							{
-								JOptionPane.showMessageDialog(null,"Congrats you logged in");
+								//lJOptionPane.showMessageDialog(null,"Congrats you logged in");
+								
+								container = database.getLoadedMap(usernameTextField.getText());
+								main.currentPlayerInfo = container; //--------------------Sets the arraylist with all saved questions 
 								LoginScreen.this.dispose();
 							}
 							else{
-								JOptionPane.showMessageDialog(null,"Username does not match, Please try again");
+								JOptionPane.showMessageDialog(null, "Username does not match, Please try again");
 								usernameTextField.setText("");
 							}
 						}
 						else //New users
 						{
-							if((usernameTextField.getText().compareTo("") == 0) || (passwordTextField.getText().compareTo("") == 0))//if either username or pw empty.
+							if((usernameTextField.getText().compareTo("") == 0) || (password.compareTo("") == 0))//if either username or pw empty.
 							{
 								JOptionPane.showMessageDialog(null, "Please make sure there is a USERNAME and PASSWORD");
 							}
-							else if(passwordTextField.getText().compareTo(reenterTextField.getText()) == 0)//Check if passwords match
+							else if(password.compareTo(reenterPassword) == 0)//Check if passwords match
 							{//if there is a username and pw
 								container[1] = usernameTextField.getText(); 
-								container[2] = passwordTextField.getText(); 
+								container[2] = password; 
 								container[3] = "0";
 								if(database.insertToUserTable(container))//will throw error in database side if username already exist.								
 								{
 									LoginScreen.this.dispose();
 								}
-								passwordTextField.setText(""); 
-								reenterTextField.setText("");
+								passwordField2.setText("");
+								reenterPasswordTextField.setText("");
 							}
 							else{
 								JOptionPane.showMessageDialog(null,"passwords do not match, please try again");
-								passwordTextField.setText(""); 
-								reenterTextField.setText("");
+								passwordField2.setText("");
+								reenterPasswordTextField.setText("");
 							}
 						}
 					}
