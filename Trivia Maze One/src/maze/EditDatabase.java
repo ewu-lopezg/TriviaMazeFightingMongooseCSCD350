@@ -433,6 +433,7 @@ public class EditDatabase extends JFrame {
 						container[1] = answerTextField.getText();
 						container[2] = poss1TextField.getText();
 						container[3] = poss2TextField.getText(); 
+						container[4] = "E";
 						container[5] = "1";
 						container[6] = "0";   
 						if(database.insertToQuestionSTable(container))

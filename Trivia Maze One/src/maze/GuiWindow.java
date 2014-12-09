@@ -42,7 +42,7 @@ public class GuiWindow {
 	JMenuItem mntmQuit;
 
 	private JFrame frame;
-	Maze maze = new Maze();
+	Maze maze;
 	private mapPanel map;
 	private LoginScreen login = new LoginScreen();
 	String[] currentPlayerInfo;
@@ -77,7 +77,7 @@ public class GuiWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//maze = new Maze();
+		maze = new Maze();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 630, 405);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
