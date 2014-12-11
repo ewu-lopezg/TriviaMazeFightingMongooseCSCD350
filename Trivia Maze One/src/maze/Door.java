@@ -8,50 +8,40 @@ public class Door implements I_Path
 {
 	private I_Status status;
 	
-	/**
-	 * 
-	 */
+//cerate a door with default of closed
 	public Door()
 	{
 		this.status = new Closed();
 	}
-	/**
-	 * @param passed
-	 */
+
+//creates a door with a chosen status
 	public Door(I_Status passed)
 	{
 		this.status = passed;
 	}
 	
 
-	/**
-	 * @param newStatus
-	 */
+//sets the status of a door
 	private void setStatus(I_Status newStatus) //-------------------
 	{
 		this.status = newStatus;
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Path#isPassable()
-	 */
+//return if a door is passable depending on status
 	@Override
 	public boolean isPassable() 
 	{
 		return this.status.isPassable();
 	}
 	
-	/* (non-Javadoc)
-	 * @see maze.I_Path#visit()
-	 */
+
+//returns the type of door depending on status
 	public String visit()
 	{
 		return this.status.visit();
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Path#move()
-	 */
+//returns if a player moved through the door and changes status
 	@Override
 	public boolean move() 
 	{

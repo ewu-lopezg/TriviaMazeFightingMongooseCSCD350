@@ -14,10 +14,7 @@ public interface I_Status
 	 * @return if the player is allowed to move
 	 */
 	public boolean isPassable();
-	/**
-	 * @return boolean if the status has a question to unlock it
-	 */
-	public boolean hasQuestion();
+
 	/**
 	 * @return the string representaion of the status
 	 */

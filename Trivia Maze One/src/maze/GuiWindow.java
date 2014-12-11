@@ -232,9 +232,9 @@ public class GuiWindow {
 		mntmLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{ //----------------------load game
-//				choice.setVisible(true);
+//not working at the moment
 				login = new LoginScreen();
-				login.reenterPasswordTextField.setEnabled(false);//////////fix
+				login.reenterPasswordTextField.setEnabled(false);
 				login.reenterLabel.setEnabled(false);
 				login.setVisible(true);
 			}

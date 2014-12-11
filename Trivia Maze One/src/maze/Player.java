@@ -9,10 +9,7 @@ public class Player
 	Location curr;
 	Location end;
 	
-	/**
-	 * @param passed
-	 * @param end
-	 */
+//creates a player at a passed location and end destination
 	public Player(Location passed, Location end)
 	{
 		this.curr = passed;
@@ -20,33 +17,26 @@ public class Player
 		
 	}
 	
-	/**
-	 * @param newLocation
-	 */
+	//moves player to new location
 	public void move(Location newLocation)
 	{
 		this.curr = newLocation;
 	}
 	
-	/**
-	 * @return
-	 */
+	//gets the player current location
 	public Location getLocation()
 	{
 		return this.curr;
 	}
 	
-	/**
-	 * @return
-	 */
+
+// returns the end destination
 	public Location getEnd()
 	{
 		return this.end;
 	}
 	
-	/**
-	 * @return
-	 */
+	//checks if the player reached the end
 	public boolean won()
 	{
 		if(this.curr.equals(this.end))

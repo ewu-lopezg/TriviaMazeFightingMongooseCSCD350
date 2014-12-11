@@ -7,40 +7,24 @@ package maze;
 public class Locked implements I_Status 
 {
 
-	/* (non-Javadoc)
-	 * @see maze.I_Status#move()
-	 */
+//returns false if a player trys to move through a locked door
 	@Override
 	public boolean move() 
 	{
 		return false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see maze.I_Status#visit()
-	 */
+//returns l for locked door
 	public String visit()
 	{
 		return "l ";
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Status#isPassable()
-	 */
+
+//returns false (players cant move through locked doors)
 	@Override
 	public boolean isPassable() 
 	{
 		return false;
 	}
-
-	/* (non-Javadoc)
-	 * @see maze.I_Status#hasQuestion()
-	 */
-	@Override
-	public boolean hasQuestion() 
-	{
-		return false;
-	}
-
-
 }

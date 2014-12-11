@@ -11,80 +11,62 @@ public class Room
 	private I_Path left;
 	private I_Path right;
 	
-	/**
-	 * 
-	 */
+
+// makes room
 	public Room()
 	{
 	}
 	
-	/**
-	 * @return
-	 */
+
+//gets the string of the room(up right down left)
 	public String visit()
 	{
 		return this.up.visit() + this.right.visit() + this.down.visit() + this. left.visit();
 	}
-	// move right
-	/**
-	 * @param passed
-	 */
+	
+	// sets up path
 	public void setUp(I_Path passed)
 	{
 		this.up = passed;
 	}
 
-	/**
-	 * @param passed
-	 */
+	//sets down path
 	public void setDown(I_Path passed)
 	{
 		this.down = passed;
 	}
 	
-	/**
-	 * @param passed
-	 */
+	//sets left path
 	public void setLeft(I_Path passed)
 	{
 		this.left = passed;
 	}
 	
-	/**
-	 * @param passed
-	 */
+	//sets right path
 	public void setRight(I_Path passed)
 	{
 		this.right = passed;
 	}
 	
-	/**
-	 * @return
-	 */
+	//gets up path
 	public I_Path getUp()
 	{
 		return this.up;
 	}
 	
-	/**
-	 * @return
-	 */
+	//gets left path
 	public I_Path getLeft()
 	{
 		return this.left;
 	}
 	
-	/**
-	 * @return
-	 */
+	//gets right path
 	public I_Path getRight()
 	{
 		return this.right;
 	}
 	
-	/**
-	 * @return
-	 */
+	//gets down path
 	public I_Path getDown()
 	{
 		return this.down;

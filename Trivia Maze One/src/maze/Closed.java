@@ -12,9 +12,7 @@ public class Closed implements I_Status
 {
 	private I_Question question;
 
-	/* (non-Javadoc)
-	 * @see maze.I_Status#move()
-	 */
+//returns if the player moved through the closed door
 	@Override
 	public boolean move() 
 	{
@@ -22,20 +20,15 @@ public class Closed implements I_Status
 		return question;
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Status#isPassable()
-	 */
+//returns true that player could move through a closed door(after opened)
 	public boolean isPassable()
 	{
 		return true;
 	}
 
-	/**
-	 * @return
-	 */
+//gets the question out of database, creates question class, ask user for anwer then validates
 	private boolean ask()
 	{
-//		Database.Print(s);
 		String[] temp = Database.getQuestion();
 		if(temp[4].equals("E"))
 			question = new QuestionTrueFalse(temp[1], temp[0]);
@@ -57,18 +50,7 @@ public class Closed implements I_Status
 		return question.validate(selectedValue);
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Status#hasQuestion()
-	 */
-	@Override
-	public boolean hasQuestion()
-	{
-		return true;
-	}
-	
-	/* (non-Javadoc)
-	 * @see maze.I_Status#visit()
-	 */
+//returns c for closed door
 	public String visit()
 	{
 		return "c ";

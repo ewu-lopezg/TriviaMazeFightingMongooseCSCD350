@@ -33,17 +33,14 @@ public class Location
 	{
 		return this.y;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+
+//returns formated string for printing
 	public String toString()
 	{
 		return x+","+y;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+//checks if two locations are the same
 	@Override
 	public boolean equals(Object end) 
 	{

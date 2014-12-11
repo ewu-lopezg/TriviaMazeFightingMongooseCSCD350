@@ -29,9 +29,7 @@ public class QuestionMultiChoice implements I_Question
 	}
 	
 	
-	/* (non-Javadoc)
-	 * @see maze.I_Question#getPossible()
-	 */
+//gets the possible answers
 	@Override
 	public Object[] getPossible() 
 	{
@@ -39,27 +37,21 @@ public class QuestionMultiChoice implements I_Question
 		return possible;
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Question#getQuestion()
-	 */
+//gets the question
 	@Override
 	public String getQuestion()
 	{
 		return this.question;
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Question#getType()
-	 */
+//gets the type of question
 	@Override
 	public String getType() 
 	{
 		return "Multi Choice";
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Question#validate(java.lang.String)
-	 */
+	//checks if answered correctly
 	@Override
 	public boolean validate(String passed) 
 	{

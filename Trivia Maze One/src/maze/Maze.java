@@ -40,9 +40,9 @@ public class Maze
 				 for(int j =0; j <this.sizeCol; j++)
 				 {
 					 map[i][j] = new Room();
-				 } //make outer walls here ------------------------
+				 } 
 			 }
-			 //-----------------------------------------------------------------------------
+			 //-----------------------------------------
 			 
 			 String rest = passed[2];
 			 for(int i = 0; i < this.sizeRow; i ++)
@@ -72,7 +72,7 @@ public class Maze
 					 map[i][j].setLeft(setPath(curr.charAt(6)));
 					 
 						
-				 } //make outer walls here ------------------------
+				 } 
 			 }
 			 		 
 			 
@@ -122,7 +122,7 @@ public class Maze
 	 */
 	public Maze()
 	{
-		Location start = new Location(0,0); //-------------------------
+		Location start = new Location(0,0); 
 		this.sizeRow = 4;
 		this.sizeCol = 4;
 		Location end = new Location(this.sizeRow-1,this.sizeCol-1);
@@ -186,7 +186,7 @@ public class Maze
 	/**
 	 * the method to move down depending on the path set for down in that room.
 	 */
-	public void moveDown() //add index out of bounds block
+	public void moveDown() 
 	{
 		Location curr = one.getLocation();
 		Location next;

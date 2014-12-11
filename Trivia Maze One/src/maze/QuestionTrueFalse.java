@@ -17,35 +17,31 @@ public class QuestionTrueFalse implements I_Question
 		this.answer = val;
 		this.question = question;	
 	}
-	/* (non-Javadoc)
-	 * @see maze.I_Question#getPossible()
-	 */
+
+// gets possible answers
 	@Override
 	public Object[] getPossible() 
 	{
 		Object[] possible = {"true","false"};
 		return possible;
 	}
-	/* (non-Javadoc)
-	 * @see maze.I_Question#getQuestion()
-	 */
+
+//gets the question
 	@Override
 	public String getQuestion() 
 	{
 		return this.question;
 	}
-	/* (non-Javadoc)
-	 * @see maze.I_Question#getType()
-	 */
+
+//gets they type of question
 	@Override
 	public String getType() 
 	{
 		return "true/false";
 	}
 	
-	/* (non-Javadoc)
-	 * @see maze.I_Question#validate(java.lang.String)
-	 */
+
+// checks if answer is true
 	public boolean validate(String passed)
 	{
 		if(passed.compareToIgnoreCase(this.answer) ==0)

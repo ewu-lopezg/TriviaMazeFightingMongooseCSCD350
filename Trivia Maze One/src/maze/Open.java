@@ -7,9 +7,7 @@ package maze;
 public class Open implements I_Status 
 {
 
-	/* (non-Javadoc)
-	 * @see maze.I_Status#move()
-	 */
+//returns true(player can move through an open door)
 	@Override
 	public boolean move() 
 	{
@@ -17,30 +15,17 @@ public class Open implements I_Status
 
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Status#visit()
-	 */
+//returns o for open door
 	public String visit()
 	{
 		return "o ";
 	}
-	/* (non-Javadoc)
-	 * @see maze.I_Status#isPassable()
-	 */
+
+//returns true that a player can move through an open door
 	@Override
 	public boolean isPassable() 
 	{
 		return true;
 	}
-
-	/* (non-Javadoc)
-	 * @see maze.I_Status#hasQuestion()
-	 */
-	@Override
-	public boolean hasQuestion() 
-	{
-		return false;
-	}
-
 
 }

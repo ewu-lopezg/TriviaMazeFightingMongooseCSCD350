@@ -21,6 +21,7 @@ public class mapPanel extends JPanel   //switch to scroll pane
 	private final int offsetPath = 10;
 	private Player player;
 	
+//creates a mapPanel	
 	public mapPanel()
 	{
 		super();
@@ -32,12 +33,14 @@ public class mapPanel extends JPanel   //switch to scroll pane
 		
 	}
 	
+//gets offset to place sprites	
 	private int place(int val)
 	{
 		return val * base + offsetEdge;
 		
 	}
-	
+
+	//reads the map from the maze
 	public void readMap(int col, int row, String str, Player player)
 	{
 		this.sizeCol=col;
@@ -45,17 +48,12 @@ public class mapPanel extends JPanel   //switch to scroll pane
 		this.map=str;
 		this.player= player;
 	}
-	
+
+	//paints the map
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-//		floor = new ImageIcon("floor.png");
-//		doorv = new ImageIcon("doorv.png");
-//		doorh = new ImageIcon("doorh.png");
-//		wallv = new ImageIcon("wallv.png");
-//		wallh = new ImageIcon("wallh.png");
-
-		
+	
 		//--------------------------------paint floors
 		for(int i =0; i < this.sizeCol;i++)
 		{
@@ -83,9 +81,6 @@ public class mapPanel extends JPanel   //switch to scroll pane
 				{
 					doorh.paintIcon(this,g,place(j)+ offsetPath,place(i) -offsetPath);
 					
-//					g.setColor(Color.RED);
-//					g.fillRect(this.place(j)+ offsetPath, this.place(i) - offsetPath, 80, 20); //---------------------v
-					
 					if(curr.charAt(0) == 'l')
 					{
 						g.setColor(Color.RED);
@@ -98,10 +93,7 @@ public class mapPanel extends JPanel   //switch to scroll pane
 						g.fillRect(this.place(j)+ offsetPath, this.place(i) - offsetPath, 80, 20);
 					}
 					
-				}
-				//add fill r
-				
-				
+				}								
 				
 				//right
 				if(curr.charAt(2)=='w')
@@ -109,9 +101,6 @@ public class mapPanel extends JPanel   //switch to scroll pane
 				else
 				{
 					doorv.paintIcon(this, g, place(j)+ offsetEnd, place(i) + offsetPath);
-					
-//					g.setColor(Color.RED);
-//					g.fillRect(this.place(j)+ offsetEnd, this.place(i) + offsetPath, 20, 80);//-----------------X
 					
 					if(curr.charAt(2) == 'l')
 					{
@@ -134,8 +123,6 @@ public class mapPanel extends JPanel   //switch to scroll pane
 				{
 					doorh.paintIcon(this, g, place(j)+ offsetPath, place(i)+ offsetEnd);
 					
-//					g.setColor(Color.RED);
-//					g.fillRect(place(j)+ offsetPath, place(i)+ offsetEnd, 80, 20);//----------------x
 				
 					if(curr.charAt(4) == 'l')
 					{
@@ -159,10 +146,7 @@ public class mapPanel extends JPanel   //switch to scroll pane
 				else
 				{
 					doorv.paintIcon(this, g, place(j) -offsetPath, place(i) + offsetPath);
-					
-//					g.setColor(Color.RED);
-//					g.fillRect(place(j) -offsetPath, place(i) + offsetPath, 20, 80);//---------------------------X
-				
+									
 					if(curr.charAt(6) == 'l')
 					{
 						g.setColor(Color.RED);
@@ -187,12 +171,6 @@ public class mapPanel extends JPanel   //switch to scroll pane
 		g.setColor(Color.GREEN);
 		g.fillOval(place(this.player.getEnd().getY()) +35,place(this.player.getEnd().getX())+35, 40, 40);
 		
-		
-//		floor.paintIcon(this, g, 0, 0);
-//		doorh.paintIcon(this, g, 10, 0);
-		
-//		System.out.println("height: " + floor.getIconHeight());
-		//System.out.println("width: " + floor.getIconWidth());
 	}
 
 }

@@ -14,9 +14,9 @@ public class AudioPlayer
 
    private static final int	EXTERNAL_BUFFER_SIZE = 248000;
    
-   /**
- * @param fileName the name of the sound file
- */
+
+//gets a filename as a string and plays the sound file if able
+   // .wav 16 bit or less
 public static void play(String fileName)
    {
       File soundFile = new File(fileName);
@@ -31,7 +31,6 @@ public static void play(String fileName)
          DataLine.Info	info = new DataLine.Info(SourceDataLine.class,audioFormat);  
          
          SourceDataLine.Info info2 = (SourceDataLine.Info)info;
-//         System.out.println(info2);
          AudioFormat[]format = info2.getFormats();
          for(AudioFormat curr: format)
          {

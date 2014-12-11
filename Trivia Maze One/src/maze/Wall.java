@@ -6,25 +6,20 @@ package maze;
  */
 public class Wall implements I_Path
 {
-	/**
-	 * 
-	 */
+	//make a wall
 	public Wall()
 	{
 		
 	}
-	/* (non-Javadoc)
-	 * @see maze.I_Path#isPassable()
-	 */
+
+// returns false, player cant pass a wall
 	@Override
 	public boolean isPassable() 
 	{
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see maze.I_Path#move()
-	 */
+	//returns false, player didnt move through wall
 	@Override
 	public boolean move() 
 	{
@@ -32,9 +27,7 @@ public class Wall implements I_Path
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see maze.I_Path#visit()
-	 */
+	//returns w for wall
 	public String visit()
 	{
 		return "w ";
